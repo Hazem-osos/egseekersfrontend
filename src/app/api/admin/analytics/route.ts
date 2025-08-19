@@ -4,6 +4,32 @@ import { authOptions } from '@/lib/auth';
 
 export async function GET() {
   try {
+    // Temporary: bypass auth and return mock data when flag is set
+    if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
+      return NextResponse.json({
+        success: true,
+        data: {
+          users: [
+            { role: 'ADMIN', _count: { role: 1 } },
+            { role: 'FREELANCER', _count: { role: 42 } },
+            { role: 'CLIENT', _count: { role: 28 } },
+          ],
+          jobs: [
+            { status: 'OPEN', _count: { status: 15 } },
+            { status: 'IN_PROGRESS', _count: { status: 6 } },
+            { status: 'COMPLETED', _count: { status: 20 } },
+          ],
+          orders: [
+            { status: 'PENDING', _count: { status: 5 } },
+            { status: 'COMPLETED', _count: { status: 18 } },
+          ],
+          gigs: [
+            { categoryId: 'cat-1', _count: { categoryId: 10 } },
+            { categoryId: 'cat-2', _count: { categoryId: 7 } },
+          ],
+        },
+      });
+    }
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.role || session.user.role !== 'ADMIN') {

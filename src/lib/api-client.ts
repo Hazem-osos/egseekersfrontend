@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosHeaders } from 'axios';
 import { config } from '@/config/env';
-import { ApiResponse, ErrorResponse } from '@/types/api';
+import { ApiResponse, ErrorResponse, ApiErrorResponse } from '@/types/api';
 
 class ApiError extends Error {
   constructor(
@@ -81,8 +81,11 @@ export class ApiClient {
           }
         });
         
-        // Handle 401 Unauthorized errors
+        // Handle 401 Unauthorized errors (skip redirect when bypass flag is set)
         if (error.response?.status === 401) {
+          if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
+            return Promise.resolve({ success: true, data: null } as any);
+          }
           if (typeof window !== 'undefined') {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
@@ -91,9 +94,14 @@ export class ApiClient {
         }
         
         // Format error response
+        const errData = error.response?.data as Partial<ApiErrorResponse> | undefined;
+        const errMsg = typeof errData?.error === 'string'
+          ? errData.error
+          : (errData?.error as any)?.message ?? error.message;
+
         return Promise.reject({
           success: false,
-          error: error.response?.data?.error || error.message,
+          error: errMsg,
           status: error.response?.status
         });
       }
@@ -130,7 +138,8 @@ export class ApiClient {
         headers: this.getHeaders(options),
       });
 
-      return response;
+      // Interceptors return data, but Axios types this as AxiosResponse
+      return response as unknown as ApiResponse<T>;
     } catch (error) {
       if (error instanceof Error) {
         throw new ApiError(error.message, 'REQUEST_ERROR');

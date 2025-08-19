@@ -70,6 +70,12 @@ export default function AdminLayout({
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
+    // Temporary admin auth bypass
+    if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
+      setUser({ id: 'dev-admin', email: 'admin@example.com', role: 'ADMIN', firstName: 'Admin', lastName: 'User', image: null });
+      setLoading(false);
+      return;
+    }
     // Skip authentication check for the login page
     if (pathname === '/admin/login') {
       setLoading(false);
