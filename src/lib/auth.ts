@@ -2,15 +2,20 @@ import { NextAuthOptions } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import type { Adapter } from 'next-auth/adapters';
 import { prisma } from './prisma';
-import { PrismaClient as PrismaClientForAuth } from '@prisma/client';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 
-const prismaForAuth = new PrismaClientForAuth();
+// Avoid importing @prisma/client at build when auth bypass is enabled
+let prismaForAuth: any = undefined;
+if (process.env.NEXT_PUBLIC_DISABLE_AUTH !== 'true') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { PrismaClient } = require('@prisma/client');
+  prismaForAuth = new PrismaClient();
+}
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prismaForAuth) as unknown as Adapter,
+  ...(prismaForAuth ? { adapter: PrismaAdapter(prismaForAuth) as unknown as Adapter } : {}),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
