@@ -64,7 +64,7 @@ export default function AdminJobDetailsPage() {
       const response = await apiClient.get<Job>(`/api/admin/jobs/${jobId}`);
       
       if (response.success && response.data) {
-        setJob(response.data);
+        setJob(response.data as Job);
         setError(null);
       } else {
         setError(response.error || "Failed to load job details");
@@ -89,7 +89,7 @@ export default function AdminJobDetailsPage() {
       });
 
       if (response.success && response.data) {
-        setJob(response.data);
+        setJob(response.data as Job);
         toast.success("Job status updated successfully");
       } else {
         throw new Error(response.error || "Failed to update job status");
