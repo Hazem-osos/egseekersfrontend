@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { ProjectForm } from '@/components/portfolio/ProjectForm';
 import { toast } from 'sonner';
-import { use } from 'react';
 
 interface Project {
   id: string;
@@ -15,15 +14,14 @@ interface Project {
   projectUrl: string;
 }
 
-export default function Page({ params }: { params: Promise<{ id: string }> }) {
+export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
-  const resolvedParams = use(params);
 
   useEffect(() => {
     fetchProject();
-  }, [resolvedParams.id]);
+  }, [params.id]);
 
   const fetchProject = async () => {
     try {
@@ -33,7 +31,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         return;
       }
 
-      const response = await axios.get(`http://localhost:5001/api/portfolio/${resolvedParams.id}`, {
+      const response = await axios.get(`http://localhost:5001/api/portfolio/${params.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

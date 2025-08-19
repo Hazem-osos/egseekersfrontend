@@ -1,59 +1,36 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
-import prisma from '@/lib/prisma';
 
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session?.user?.role || session.user.role !== 'ADMIN') {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
         { status: 401 }
       );
     }
 
-    // Fetch user distribution
-    const users = await prisma.user.groupBy({
-      by: ['role'],
-      _count: {
-        role: true,
+    // Call backend API to get analytics data
+    const backendUrl = process.env.BACKEND_URL || 'http://localhost:5001';
+    const response = await fetch(`${backendUrl}/api/admin/analytics`, {
+      headers: {
+        'Authorization': `Bearer ${session.user.id}`,
+        'Content-Type': 'application/json',
       },
     });
 
-    // Fetch job status distribution
-    const jobs = await prisma.job.groupBy({
-      by: ['status'],
-      _count: {
-        status: true,
-      },
-    });
+    if (!response.ok) {
+      throw new Error(`Backend API error: ${response.status}`);
+    }
 
-    // Fetch payment status distribution
-    const payments = await prisma.payment.groupBy({
-      by: ['status'],
-      _count: {
-        status: true,
-      },
-    });
-
-    // Fetch dispute status distribution
-    const disputes = await prisma.dispute.groupBy({
-      by: ['status'],
-      _count: {
-        status: true,
-      },
-    });
-
+    const data = await response.json();
+    
     return NextResponse.json({
       success: true,
-      data: {
-        users,
-        jobs,
-        payments,
-        disputes,
-      },
+      data: data.data || data,
     });
   } catch (error) {
     console.error('Error fetching analytics:', error);
