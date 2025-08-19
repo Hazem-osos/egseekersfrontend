@@ -140,7 +140,9 @@ export default function FreelancerProfilePage() {
     )
   }
 
-  const averageRating = user.reviews?.reduce((acc, review) => acc + review.rating, 0) / (user.reviews?.length || 1)
+  const totalReviews = user.reviews?.length ?? 0
+  const totalRating = user.reviews?.reduce((acc, review) => acc + review.rating, 0) ?? 0
+  const averageRating = totalReviews > 0 ? totalRating / totalReviews : 0
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
