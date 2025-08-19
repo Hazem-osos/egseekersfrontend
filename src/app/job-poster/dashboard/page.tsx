@@ -106,6 +106,11 @@ export default function JobPosterDashboard() {
 
   useEffect(() => {
     const checkAuth = async () => {
+      // Bypass auth when preview flag is enabled
+      if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
+        setUser({ id: 'demo', email: 'client@example.com', firstName: 'Client', lastName: 'User', role: 'CLIENT' })
+        return
+      }
       try {
         const token = localStorage.getItem('token')
         if (!token) {
@@ -148,10 +153,12 @@ export default function JobPosterDashboard() {
         setIsLoading(true)
         setError(null)
         
-        const token = localStorage.getItem('token')
-        if (!token) {
-          router.push('/login')
-          return
+        if (process.env.NEXT_PUBLIC_DISABLE_AUTH !== 'true') {
+          const token = localStorage.getItem('token')
+          if (!token) {
+            router.push('/login')
+            return
+          }
         }
 
         const headers = {

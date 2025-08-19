@@ -30,6 +30,12 @@ export function RouteGuard({
 
   useEffect(() => {
     const checkAuth = async () => {
+      // Global bypass: allow all routes when preview flag is enabled
+      if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
+        setUser({ id: 'demo', email: 'demo@example.com', role: 'FREELANCER', firstName: 'Demo', lastName: 'User' });
+        setLoading(false);
+        return;
+      }
       try {
         const token = localStorage.getItem('token');
         
