@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle, Search, Filter, Download, Eye, CheckCircle, XCircle, Clock } from "lucide-react";
+import { AlertCircle, Search, Filter, Download, Eye, CheckCircle, XCircle, Clock, File } from "lucide-react";
 import { toast } from "sonner";
 import { apiClient } from "@/lib/api-client";
 import { formatCurrency } from "@/lib/utils";
@@ -319,7 +319,7 @@ export default function AdminContractsPage() {
                 <Card className="border border-gray-200">
                   <CardContent className="py-8">
                     <div className="text-center text-gray-500">
-                      <FileText className="mx-auto h-12 w-12 text-gray-400" />
+                      <File className="mx-auto h-12 w-12 text-gray-400" />
                       <h3 className="mt-2 text-sm font-medium text-gray-900">No contracts found</h3>
                       <p className="mt-1 text-sm text-gray-500">
                         No contracts match your current filters.
@@ -402,7 +402,7 @@ export default function AdminContractsPage() {
                 <Card className="border border-gray-200">
                   <CardContent className="py-8">
                     <div className="text-center text-gray-500">
-                      <FileText className="mx-auto h-12 w-12 text-gray-400" />
+                      <File className="mx-auto h-12 w-12 text-gray-400" />
                       <h3 className="mt-2 text-sm font-medium text-gray-900">No pending contracts</h3>
                       <p className="mt-1 text-sm text-gray-500">
                         No pending contracts match your current filters.
@@ -485,7 +485,7 @@ export default function AdminContractsPage() {
                 <Card className="border border-gray-200">
                   <CardContent className="py-8">
                     <div className="text-center text-gray-500">
-                      <FileText className="mx-auto h-12 w-12 text-gray-400" />
+                      <File className="mx-auto h-12 w-12 text-gray-400" />
                       <h3 className="mt-2 text-sm font-medium text-gray-900">No active contracts</h3>
                       <p className="mt-1 text-sm text-gray-500">
                         No active contracts match your current filters.
@@ -553,7 +553,7 @@ export default function AdminContractsPage() {
                 <Card className="border border-gray-200">
                   <CardContent className="py-8">
                     <div className="text-center text-gray-500">
-                      <FileText className="mx-auto h-12 w-12 text-gray-400" />
+                      <File className="mx-auto h-12 w-12 text-gray-400" />
                       <h3 className="mt-2 text-sm font-medium text-gray-900">No completed contracts</h3>
                       <p className="mt-1 text-sm text-gray-500">
                         No completed contracts match your current filters.
@@ -621,7 +621,7 @@ export default function AdminContractsPage() {
                 <Card className="border border-gray-200">
                   <CardContent className="py-8">
                     <div className="text-center text-gray-500">
-                      <FileText className="mx-auto h-12 w-12 text-gray-400" />
+                      <File className="mx-auto h-12 w-12 text-gray-400" />
                       <h3 className="mt-2 text-sm font-medium text-gray-900">No cancelled contracts</h3>
                       <p className="mt-1 text-sm text-gray-500">
                         No cancelled contracts match your current filters.
