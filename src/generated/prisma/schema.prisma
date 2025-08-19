@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(cuid())
+  name            String?
+  email           String    @unique
+  password        String?
+  emailVerified   DateTime?
+  image           String?
+  role            Role      @default(FREELANCER)
+  bio             String?   @db.Text
+  skills          Json?     @default("[]")
+  hourlyRate      Float?
+  location        String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  accounts        Account[]
+  sessions        Session[]
+  gigs            Gig[]
+  reviews         Review[]  @relation("ReviewAuthor")
+  receivedReviews Review[]  @relation("ReviewTarget")
+  orders          Order[]   @relation("BuyerOrders")
+  sellerOrders    Order[]   @relation("SellerOrders")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Category {
+  id            String        @id @default(cuid())
+  name          String        @unique
+  description   String?       @db.Text
+  slug          String        @unique
+  image         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  gigs          Gig[]
+  subcategories Subcategory[]
+}
+
+model Subcategory {
+  id          String   @id @default(cuid())
+  name        String
+  description String?  @db.Text
+  slug        String
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  gigs        Gig[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([slug, categoryId])
+}
+
+model Gig {
+  id            String       @id @default(cuid())
+  title         String
+  description   String       @db.Text
+  images        Json         @default("[]")
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId    String
+  category      Category     @relation(fields: [categoryId], references: [id])
+  subcategoryId String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+  packages      Package[]
+  requirements  String?      @db.Text
+  tags          Json         @default("[]")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  reviews       Review[]
+  orders        Order[]
+}
+
+model Package {
+  id           String      @id @default(cuid())
+  name         PackageTier
+  description  String      @db.Text
+  price        Float
+  revisions    Int         @default(1)
+  deliveryDays Int
+  features     Json        @default("[]")
+  gigId        String
+  gig          Gig         @relation(fields: [gigId], references: [id], onDelete: Cascade)
+  orders       Order[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  gigId        String
+  gig          Gig         @relation(fields: [gigId], references: [id])
+  packageId    String
+  package      Package     @relation(fields: [packageId], references: [id])
+  buyerId      String
+  buyer        User        @relation("BuyerOrders", fields: [buyerId], references: [id])
+  sellerId     String
+  seller       User        @relation("SellerOrders", fields: [sellerId], references: [id])
+  status       OrderStatus @default(PENDING)
+  requirements String?     @db.Text
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  review       Review?
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      @db.Int
+  comment   String?  @db.Text
+  gigId     String
+  gig       Gig      @relation(fields: [gigId], references: [id])
+  authorId  String
+  author    User     @relation("ReviewAuthor", fields: [authorId], references: [id])
+  targetId  String
+  target    User     @relation("ReviewTarget", fields: [targetId], references: [id])
+  orderId   String   @unique
+  order     Order    @relation(fields: [orderId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  FREELANCER
+  CLIENT
+}
+
+enum PackageTier {
+  BASIC
+  STANDARD
+  PREMIUM
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REVISION
+  DELIVERED
+}
