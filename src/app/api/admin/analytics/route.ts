@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 
 export async function GET() {
   try {
@@ -30,6 +29,8 @@ export async function GET() {
         },
       });
     }
+    // Dynamically import auth only when not bypassing to avoid @prisma/client initialization at build
+    const { authOptions } = await import('@/lib/auth');
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.role || session.user.role !== 'ADMIN') {
