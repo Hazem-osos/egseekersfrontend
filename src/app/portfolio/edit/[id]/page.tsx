@@ -14,14 +14,25 @@ interface Project {
   projectUrl: string;
 }
 
-export default function Page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
+  const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
 
   useEffect(() => {
-    fetchProject();
-  }, [params.id]);
+    const resolveParams = async () => {
+      const resolved = await params;
+      setResolvedParams(resolved);
+    };
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (resolvedParams) {
+      fetchProject();
+    }
+  }, [resolvedParams]);
 
   const fetchProject = async () => {
     try {
@@ -31,7 +42,7 @@ export default function Page({ params }: { params: { id: string } }) {
         return;
       }
 
-      const response = await axios.get(`http://localhost:5001/api/portfolio/${params.id}`, {
+      const response = await axios.get(`http://localhost:5001/api/portfolio/${resolvedParams!.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

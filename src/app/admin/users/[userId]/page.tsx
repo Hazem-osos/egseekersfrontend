@@ -31,7 +31,7 @@ interface User {
   };
 }
 
-export default function AdminUserDetailsPage({ params }: { params: { userId: string } }) {
+export default function AdminUserDetailsPage({ params }: { params: Promise<{ userId: string }> }) {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -42,15 +42,26 @@ export default function AdminUserDetailsPage({ params }: { params: { userId: str
     role: "",
     password: ""
   });
+  const [resolvedParams, setResolvedParams] = useState<{ userId: string } | null>(null);
 
   useEffect(() => {
-    fetchUser();
-  }, []);
+    const resolveParams = async () => {
+      const resolved = await params;
+      setResolvedParams(resolved);
+    };
+    resolveParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (resolvedParams) {
+      fetchUser();
+    }
+  }, [resolvedParams]);
 
   const fetchUser = async () => {
     try {
       setLoading(true);
-      const response = await apiClient.get<{ user: User }>(`/api/admin/users/${params.userId}`);
+      const response = await apiClient.get<{ user: User }>(`/api/admin/users/${resolvedParams!.userId}`);
       
       if (response.success && response.data) {
         setUser(response.data.user);
@@ -92,7 +103,7 @@ export default function AdminUserDetailsPage({ params }: { params: { userId: str
         ...(formData.password && { password: formData.password })
       };
 
-      const response = await apiClient.patch(`/api/admin/users/${params.userId}`, payload);
+      const response = await apiClient.patch(`/api/admin/users/${resolvedParams!.userId}`, payload);
       
       if (response.success) {
         toast.success("User updated successfully");
