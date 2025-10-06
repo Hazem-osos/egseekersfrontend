@@ -45,7 +45,7 @@ export default function LoginPage() {
 
   const checkServer = async (): Promise<boolean> => {
     try {
-      const response = await fetch('http://localhost:5001/api/health', {
+      const response = await fetch('https://impressional-unconsoling-beckie.ngrok-free.dev/api/health', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ export default function LoginPage() {
       if (user.role === 'FREELANCER') {
         router.push('/freelancer/dashboard');
       } else if (user.role === 'CLIENT') {
-        router.push('/client/dashboard');
+        router.push('/job-poster/dashboard');
       }
     } catch (err) {
       console.error("Login error:", err)

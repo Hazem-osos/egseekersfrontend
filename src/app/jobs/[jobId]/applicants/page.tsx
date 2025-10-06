@@ -48,7 +48,7 @@ export default function JobApplicantsPage() {
           return
         }
 
-        const jobResponse = await axios.get(`http://localhost:5001/api/jobs/${jobId}`, {
+        const jobResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/jobs/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
 
@@ -72,7 +72,7 @@ export default function JobApplicantsPage() {
   const handleUpdateProposalStatus = async (proposalId: string, status: 'ACCEPTED' | 'REJECTED') => {
     try {
       const response = await axios.patch(
-        `http://localhost:5001/api/proposals/${proposalId}`,
+        `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${proposalId}`,
         { status },
         {
           headers: {

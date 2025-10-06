@@ -13,7 +13,7 @@ import Link from "next/link"
 
 // Create axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:5001/api',
+  baseURL: 'https://impressional-unconsoling-beckie.ngrok-free.dev/api',
   headers: {
     'Content-Type': 'application/json',
   },

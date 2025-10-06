@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosHeaders } from 'axios';
 import { config } from '@/config/env';
-import { ApiResponse, ErrorResponse, ApiErrorResponse } from '@/types/api';
+import { ApiResponse, ErrorResponse } from '@/types/api';
 
 class ApiError extends Error {
   constructor(
@@ -68,24 +68,26 @@ export class ApiClient {
         return data;
       },
       (error: AxiosError) => {
-        console.error('Response error details:', {
-          message: error.message,
-          code: error.code,
-          status: error.response?.status,
-          data: error.response?.data,
-          config: {
-            url: error.config?.url,
-            method: error.config?.method,
-            baseURL: error.config?.baseURL,
-            headers: error.config?.headers
-          }
-        });
+        // Check if it's actually an AxiosError
+        if (error && typeof error === 'object') {
+          console.error('Response error details:', {
+            message: error.message || 'Unknown error',
+            code: error.code || 'NO_CODE',
+            status: error.response?.status || 'NO_STATUS',
+            data: error.response?.data || 'NO_DATA',
+            config: {
+              url: error.config?.url || 'NO_URL',
+              method: error.config?.method || 'NO_METHOD',
+              baseURL: error.config?.baseURL || 'NO_BASE_URL',
+              headers: error.config?.headers || 'NO_HEADERS'
+            }
+          });
+        } else {
+          console.error('Non-AxiosError received:', error);
+        }
         
-        // Handle 401 Unauthorized errors (skip redirect when bypass flag is set)
+        // Handle 401 Unauthorized errors
         if (error.response?.status === 401) {
-          if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
-            return Promise.resolve({ success: true, data: null } as any);
-          }
           if (typeof window !== 'undefined') {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
@@ -94,15 +96,10 @@ export class ApiClient {
         }
         
         // Format error response
-        const errData = error.response?.data as Partial<ApiErrorResponse> | undefined;
-        const errMsg = typeof errData?.error === 'string'
-          ? errData.error
-          : (errData?.error as any)?.message ?? error.message;
-
         return Promise.reject({
           success: false,
-          error: errMsg,
-          status: error.response?.status
+          error: (error.response?.data as any)?.error || error.message || 'An unknown error occurred',
+          status: error.response?.status || 500
         });
       }
     );
@@ -138,7 +135,6 @@ export class ApiClient {
         headers: this.getHeaders(options),
       });
 
-      // Interceptors return data, but Axios types this as AxiosResponse
       return response as unknown as ApiResponse<T>;
     } catch (error) {
       if (error instanceof Error) {

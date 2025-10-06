@@ -1,21 +1,12 @@
 import { NextAuthOptions } from 'next-auth';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import type { Adapter } from 'next-auth/adapters';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from './prisma';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 
-// Avoid importing @prisma/client at build when auth bypass is enabled
-let prismaForAuth: any = undefined;
-if (process.env.NEXT_PUBLIC_DISABLE_AUTH !== 'true') {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { PrismaClient } = require('@prisma/client');
-  prismaForAuth = new PrismaClient();
-}
-
 export const authOptions: NextAuthOptions = {
-  ...(prismaForAuth ? { adapter: PrismaAdapter(prismaForAuth) as unknown as Adapter } : {}),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -27,7 +18,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, _req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error('Invalid credentials');
         }
@@ -54,9 +45,9 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user.id,
           email: user.email,
-          name: user.name ?? '',
+          name: user.name,
           role: user.role,
-        } as any;
+        };
       },
     }),
   ],

@@ -9,7 +9,7 @@ export class ApiError extends Error {
     super(error.message);
     this.name = 'ApiError';
     this.statusCode = error.statusCode;
-    this.details = error.details;
+   
   }
 }
 

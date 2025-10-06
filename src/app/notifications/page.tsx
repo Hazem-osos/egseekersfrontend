@@ -34,8 +34,8 @@ const NotificationsPage = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:5001/api/notifications', {
-        headers: { Authorization: `Bearer ${token}` }
+      const response = await axios.get('https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications', {
+        headers: { Authorization: `Bearer ${token}` } 
       });
 
       setNotifications(response.data);
@@ -55,7 +55,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      await axios.put(`http://localhost:5001/api/notifications/${id}/read`, {}, {
+      await axios.put(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/${id}/read`, {}, {   
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -78,7 +78,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      await axios.put('http://localhost:5001/api/notifications/read/all', {}, {
+      await axios.put('https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/read/all', {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -98,7 +98,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      await axios.delete(`http://localhost:5001/api/notifications/${id}`, {
+      await axios.delete(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -121,7 +121,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      await axios.delete('http://localhost:5001/api/notifications/read/all', {
+      await axios.delete('https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/read/all', {
         headers: { Authorization: `Bearer ${token}` }
       });
 

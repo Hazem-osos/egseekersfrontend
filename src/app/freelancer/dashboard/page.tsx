@@ -100,11 +100,6 @@ export default function FreelancerDashboard() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      // Bypass auth when preview flag is enabled
-      if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
-        setUser({ id: 'demo', email: 'demo@example.com', firstName: 'Demo', lastName: 'User', role: 'FREELANCER' })
-        return
-      }
       try {
        const token = localStorage.getItem('token')
         if (!token) {
@@ -147,12 +142,10 @@ export default function FreelancerDashboard() {
         setLoading(true)
         setError(null)
         
-        if (process.env.NEXT_PUBLIC_DISABLE_AUTH !== 'true') {
-          const token = localStorage.getItem('token')
-          if (!token) {
-            router.push('/login')
-            return
-          }
+        const token = localStorage.getItem('token')
+        if (!token) {
+          router.push('/login')
+          return
         }
 
         // Fetch all data in parallel

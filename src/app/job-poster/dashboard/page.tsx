@@ -106,11 +106,6 @@ export default function JobPosterDashboard() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      // Bypass auth when preview flag is enabled
-      if (process.env.NEXT_PUBLIC_DISABLE_AUTH === 'true') {
-        setUser({ id: 'demo', email: 'client@example.com', firstName: 'Client', lastName: 'User', role: 'CLIENT' })
-        return
-      }
       try {
         const token = localStorage.getItem('token')
         if (!token) {
@@ -119,7 +114,7 @@ export default function JobPosterDashboard() {
         }
 
         const userResponse = await axios.get<User>(
-          `http://localhost:5001/api/auth/me`,
+          `https://impressional-unconsoling-beckie.ngrok-free.dev/api/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -153,12 +148,10 @@ export default function JobPosterDashboard() {
         setIsLoading(true)
         setError(null)
         
-        if (process.env.NEXT_PUBLIC_DISABLE_AUTH !== 'true') {
-          const token = localStorage.getItem('token')
-          if (!token) {
-            router.push('/login')
-            return
-          }
+        const token = localStorage.getItem('token')
+        if (!token) {
+          router.push('/login')
+          return
         }
 
         const headers = {
@@ -168,7 +161,7 @@ export default function JobPosterDashboard() {
         // Fetch data one by one to better handle errors
         try {
           const statsResponse = await axios.get<DashboardStats>(
-            `http://localhost:5001/api/dashboard/stats`, 
+            `https://impressional-unconsoling-beckie.ngrok-free.dev/api/dashboard/stats`, 
             { headers }
           )
           setStats(statsResponse.data)
@@ -179,7 +172,7 @@ export default function JobPosterDashboard() {
 
         try {
           const jobsResponse = await axios.get<Job[]>(
-            `http://localhost:5001/api/dashboard/jobs/recent`, 
+            `https://impressional-unconsoling-beckie.ngrok-free.dev/api/dashboard/jobs/recent`, 
             { headers }
           )
           setRecentJobs(jobsResponse.data)
@@ -190,7 +183,7 @@ export default function JobPosterDashboard() {
 
         try {
           const applicationsResponse = await axios.get<Application[]>(
-            `http://localhost:5001/api/dashboard/applications/recent`, 
+            `https://impressional-unconsoling-beckie.ngrok-free.dev/api/dashboard/applications/recent`, 
             { headers }
           )
           setRecentApplications(applicationsResponse.data)
@@ -201,7 +194,7 @@ export default function JobPosterDashboard() {
 
         try {
           const paymentsResponse = await axios.get<Payment[]>(
-            `http://localhost:5001/api/dashboard/payments/recent`, 
+                `https://impressional-unconsoling-beckie.ngrok-free.dev/api/dashboard/payments/recent`, 
             { headers }
           )
           setRecentPayments(paymentsResponse.data)

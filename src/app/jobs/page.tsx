@@ -285,7 +285,7 @@ export default function JobsPage() {
         return
       }
 
-      const response = await axios.get('http://localhost:5001/api/jobs', {
+      const response = await axios.get('https://impressional-unconsoling-beckie.ngrok-free.dev/api/jobs', {
         headers: { Authorization: `Bearer ${token}` },
         params: {
           page,

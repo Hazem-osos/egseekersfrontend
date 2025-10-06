@@ -55,7 +55,7 @@ export default function ProposalDetailsPage() {
         }
 
         // Get current user
-        const userResponse = await axios.get(`http://localhost:5001/api/auth/me`, {
+        const userResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         setUser(userResponse.data)
@@ -63,7 +63,7 @@ export default function ProposalDetailsPage() {
         // Get proposal details
         console.log('Fetching proposal:', params.proposalId)
         const proposalResponse = await axios.get(
-          `http://localhost:5001/api/proposals/${params.proposalId}`,
+          `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${params.proposalId}`,
           { 
             headers: { 
               Authorization: `Bearer ${token}`,
@@ -110,8 +110,8 @@ export default function ProposalDetailsPage() {
 
       // Use the new accept/reject endpoints
       const endpoint = newStatus === 'ACCEPTED' 
-        ? `http://localhost:5001/api/proposals/${params.proposalId}/accept`
-        : `http://localhost:5001/api/proposals/${params.proposalId}/reject`;
+        ? `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${params.proposalId}/accept`
+          : `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${params.proposalId}/reject`;
       
       await axios.put(
         endpoint,
@@ -121,7 +121,7 @@ export default function ProposalDetailsPage() {
 
       // Refresh the proposal data to get updated status
       const proposalResponse = await axios.get(
-        `http://localhost:5001/api/proposals/${params.proposalId}`,
+            `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${params.proposalId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       )
       setProposal(proposalResponse.data)
@@ -143,7 +143,7 @@ export default function ProposalDetailsPage() {
 
       // Accept proposal (this will also create the contract)
       await axios.post(
-        `http://localhost:5001/api/proposals/${params.proposalId}/accept`,
+        `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${params.proposalId}/accept`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )

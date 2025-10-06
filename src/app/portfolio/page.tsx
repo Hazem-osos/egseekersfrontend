@@ -38,7 +38,7 @@ export default function Page() {
         return;
       }
 
-      const response = await axios.get('http://localhost:5001/api/portfolio', {
+      const response = await axios.get('https://impressional-unconsoling-beckie.ngrok-free.dev/api/portfolio', {
         headers: {
           Authorization: `Bearer ${token}`
         }

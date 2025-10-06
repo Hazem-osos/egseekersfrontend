@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import axios from 'axios'
+import { apiClient } from '@/lib/api-client'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
@@ -54,10 +54,8 @@ export default function ProposePage() {
           return
         }
         
-        const response = await axios.get(`http://localhost:5001/api/jobs/${params.jobId}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-        setJob(response.data)
+        const response = await apiClient.get(`/jobs/${params.jobId}`)
+       
       } catch (error) {
         console.error('Error fetching job:', error)
         toast.error('Failed to load job details')
@@ -81,19 +79,18 @@ export default function ProposePage() {
         return
       }
       
-      await axios.post('http://localhost:5001/api/proposals', {
+      await apiClient.post('/proposals', {
         jobId: params.jobId,
         amount: parseFloat(formData.amount),
         coverLetter: formData.coverLetter,
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
+        estimatedDuration: formData.estimatedDuration,
       })
 
       toast.success('Proposal submitted successfully')
       router.push(`/jobs/${params.jobId}`)
     } catch (error: any) {
       console.error('Error submitting proposal:', error)
-      toast.error(error.response?.data?.error || 'Failed to submit proposal')
+      toast.error(error.error || 'Failed to submit proposal')
     } finally {
       setSubmitting(false)
     }

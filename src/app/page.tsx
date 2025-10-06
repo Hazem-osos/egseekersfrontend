@@ -123,7 +123,7 @@ export default function Home() {
         <div className="container py-20 md:py-28 relative">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary/80 to-emerald-500">
-              Find the perfect Egyptian freelance services for your business
+              Find the perfect  freelance services for your business
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
               Connect with talented Egyptian freelancers and get your projects done efficiently and affordably.

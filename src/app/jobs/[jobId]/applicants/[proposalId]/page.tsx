@@ -71,12 +71,12 @@ export default function ProposalDetailsPage() {
         }
 
         // Get current user
-        const userResponse = await axios.get(`http://localhost:5001/api/auth/me`, {
+        const userResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
 
         // Get job details
-        const jobResponse = await axios.get(`http://localhost:5001/api/jobs/${jobId}`, {
+        const jobResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/jobs/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         setJob(jobResponse.data)
@@ -85,7 +85,7 @@ export default function ProposalDetailsPage() {
         setIsJobPoster(userResponse.data.role === 'CLIENT' && jobResponse.data.client.id === userResponse.data.id)
 
         // Get proposal details
-        const proposalResponse = await axios.get(`http://localhost:5001/api/proposals/${proposalId}`, {
+        const proposalResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${proposalId}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         setProposal(proposalResponse.data)
@@ -111,7 +111,7 @@ export default function ProposalDetailsPage() {
   const handleUpdateProposalStatus = async (status: 'ACCEPTED' | 'REJECTED') => {
     try {
       const response = await axios.patch(
-        `http://localhost:5001/api/proposals/${proposalId}`,
+        `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${proposalId}`,
         { status },
         {
           headers: {

@@ -62,8 +62,8 @@ export default function PostJobPage() {
 
       // Send the request to the backend API
       const response = await axios.post(
-        'http://localhost:5001/api/jobs',
-        jobData,
+        'https://impressional-unconsoling-beckie.ngrok-free.dev/api/jobs',
+        jobData,  
         {
           headers: {
             'Content-Type': 'application/json',

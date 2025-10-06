@@ -54,7 +54,7 @@ const ProposalsPage = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await axios.get('http://localhost:5001/api/notifications/unread/count', {
+      const response = await axios.get('https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/unread/count', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -73,7 +73,7 @@ const ProposalsPage = () => {
       }
 
       // First, get the user's profile to get their ID and role
-      const userResponse = await axios.get(`http://localhost:5001/api/users/profile`, {
+      const userResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/users/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -87,7 +87,7 @@ const ProposalsPage = () => {
       }
 
       // Use the correct endpoint with the user ID
-      const response = await axios.get(`http://localhost:5001/api/proposals/freelancer/${userId}`, {
+      const response = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/freelancer/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
