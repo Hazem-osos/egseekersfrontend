@@ -41,6 +41,7 @@ interface User {
   email: string
   role: string
   image?: string
+  title?: string
   bio?: string
   skills?: string[]
   hourlyRate?: number
@@ -57,6 +58,11 @@ interface User {
     taxId?: string
     country?: string
     state?: string
+    routingNumber?: string
+    accountType?: string
+    bankName?: string
+    automaticPayouts?: boolean
+    minimumPayout?: number
   }
   verificationStatus?: 'NOT_SUBMITTED' | 'PENDING' | 'APPROVED' | 'REJECTED'
   resume?: {
@@ -66,6 +72,7 @@ interface User {
     mimeType: string
     size: number
   }
+  resumeUrl?: string
 }
 
 interface NotificationSettings {
@@ -77,7 +84,9 @@ interface NotificationSettings {
   paymentNotifications: boolean
   messageNotifications: boolean
   clientMessages: boolean
+  contractUpdates: boolean
   milestoneUpdates: boolean
+  paymentUpdates: boolean
   reviewRequests: boolean
 }
 
@@ -129,7 +138,9 @@ export default function FreelancerSettingsPage() {
     paymentNotifications: true,
     messageNotifications: true,
     clientMessages: true,
+    contractUpdates: true,
     milestoneUpdates: true,
+    paymentUpdates: true,
     reviewRequests: true,
   })
   const [securitySettings, setSecuritySettings] = useState<SecuritySettings>({
@@ -618,8 +629,8 @@ export default function FreelancerSettingsPage() {
                     <Label htmlFor="title">Professional Title</Label>
                     <Input
                       id="title"
-                      value={user?.title || ''}
-                      onChange={(e) => setUser(prev => prev ? { ...prev, title: e.target.value } : null)}
+                      value={(user as any)?.title || ''}
+                      onChange={(e) => setUser(prev => (prev ? ({ ...(prev as any), title: e.target.value } as any) : null))}
                       className="bg-white/50"
                       placeholder="e.g. Senior Web Developer"
                     />
@@ -740,10 +751,7 @@ export default function FreelancerSettingsPage() {
                 <CardDescription>Verify your identity to build trust with clients</CardDescription>
               </CardHeader>
               <CardContent>
-                <IdVerification
-                  verificationStatus={verificationStatus}
-                  onStatusChange={setVerificationStatus}
-                />
+                <IdVerification />
               </CardContent>
             </Card>
           </TabsContent>
