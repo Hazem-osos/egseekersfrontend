@@ -7,7 +7,7 @@ import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { Trash2, Check, CheckCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { messagesApi } from '@/lib/api/messages';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/toast';
 
 interface MessageItemProps {
   message: Message;
@@ -18,25 +18,17 @@ interface MessageItemProps {
 export function MessageItem({ message, isCurrentUser, onDelete }: MessageItemProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const { toast } = useToast();
 
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
       await messagesApi.deleteMessage(message.id);
-      toast({
-        title: 'Message deleted',
-        description: 'The message has been successfully deleted.',
-      });
+      toast.success('The message has been successfully deleted.');
       if (onDelete) {
         onDelete();
       }
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to delete the message. Please try again.',
-        variant: 'destructive',
-      });
+      toast.error('Failed to delete the message. Please try again.');
     } finally {
       setIsDeleting(false);
       setShowDeleteConfirm(false);
