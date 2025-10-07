@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "@/components/ui/toast"
 import axios from "axios"
 
 // Create axios instance
@@ -43,7 +43,6 @@ interface ProfileSettingsProps {
 }
 
 export default function ProfileSettings({ profile, onProfileChange }: ProfileSettingsProps) {
-  const { toast } = useToast()
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
 
@@ -53,17 +52,10 @@ export default function ProfileSettings({ profile, onProfileChange }: ProfileSet
 
     try {
       await api.put('/users/profile', profile)
-      toast({
-        title: "Success",
-        description: "Profile updated successfully",
-      })
+      toast.success("Profile updated successfully")
     } catch (error) {
       console.error("Error updating profile:", error)
-      toast({
-        title: "Error",
-        description: "Failed to update profile. Please try again.",
-        variant: "destructive",
-      })
+      toast.error("Failed to update profile. Please try again.")
     }
   }
 
@@ -76,17 +68,10 @@ export default function ProfileSettings({ profile, onProfileChange }: ProfileSet
       })
       setCurrentPassword("")
       setNewPassword("")
-      toast({
-        title: "Success",
-        description: "Password updated successfully",
-      })
+      toast.success("Password updated successfully")
     } catch (error) {
       console.error("Error updating password:", error)
-      toast({
-        title: "Error",
-        description: "Failed to update password. Please try again.",
-        variant: "destructive",
-      })
+      toast.error("Failed to update password. Please try again.")
     }
   }
 
