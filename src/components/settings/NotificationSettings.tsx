@@ -3,7 +3,7 @@
 import { Card } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "@/components/ui/toast"
 import axios from "axios"
 
 // Create axios instance
@@ -35,7 +35,6 @@ interface NotificationSettingsProps {
 }
 
 export default function NotificationSettings({ settings, onSettingsChange }: NotificationSettingsProps) {
-  const { toast } = useToast()
 
   const handleNotificationUpdate = async (updatedSettings: Partial<NotificationSettings>) => {
     if (!settings) return
@@ -43,17 +42,10 @@ export default function NotificationSettings({ settings, onSettingsChange }: Not
     try {
       await api.put('/users/notifications', updatedSettings)
       onSettingsChange({ ...settings, ...updatedSettings })
-      toast({
-        title: "Success",
-        description: "Notification settings updated successfully",
-      })
+      toast.success("Notification settings updated successfully")
     } catch (error) {
       console.error("Error updating notifications:", error)
-      toast({
-        title: "Error",
-        description: "Failed to update notification settings. Please try again.",
-        variant: "destructive",
-      })
+      toast.error("Failed to update notification settings. Please try again.")
     }
   }
 
