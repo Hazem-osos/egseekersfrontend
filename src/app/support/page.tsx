@@ -20,7 +20,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Search, LifeBuoy, FileQuestion, MessageSquare } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/toast';
 
 const categories = [
   { id: 'account', name: 'Account Issues' },
@@ -63,28 +63,19 @@ export default function SupportPage() {
   const [priority, setPriority] = useState('');
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
-  const { toast } = useToast();
 
   const handleSubmitTicket = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       // TODO: Call API to create ticket
-      toast({
-        title: 'Ticket Created',
-        description: 'Your support ticket has been submitted successfully.',
-        variant: 'default',
-      });
+      toast.success('Your support ticket has been submitted successfully.');
       // Reset form
       setCategory('');
       setPriority('');
       setSubject('');
       setDescription('');
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to create support ticket.',
-        variant: 'destructive',
-      });
+      toast.error('Failed to create support ticket.');
     }
   };
 
