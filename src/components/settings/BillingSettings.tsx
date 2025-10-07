@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useToast } from "@/components/ui/use-toast"
+import { toast } from "@/components/ui/toast"
 import axios from "axios"
 
 // Create axios instance
@@ -48,7 +48,6 @@ interface BillingSettingsProps {
 }
 
 export default function BillingSettings({ billing, onBillingChange }: BillingSettingsProps) {
-  const { toast } = useToast()
 
   const handleBillingUpdate = async (data: Partial<BillingInfo>) => {
     if (!billing) return
@@ -56,17 +55,10 @@ export default function BillingSettings({ billing, onBillingChange }: BillingSet
     try {
       await api.put('/users/billing', data)
       onBillingChange({ ...billing, ...data })
-      toast({
-        title: "Success",
-        description: "Billing information updated successfully",
-      })
+      toast.success("Billing information updated successfully")
     } catch (error) {
       console.error("Error updating billing:", error)
-      toast({
-        title: "Error",
-        description: "Failed to update billing information. Please try again.",
-        variant: "destructive",
-      })
+      toast.error("Failed to update billing information. Please try again.")
     }
   }
 
@@ -83,17 +75,10 @@ export default function BillingSettings({ billing, onBillingChange }: BillingSet
         ...billing,
         billingAddress: updatedAddress
       })
-      toast({
-        title: "Success",
-        description: "Billing address updated successfully",
-      })
+      toast.success("Billing address updated successfully")
     } catch (error) {
       console.error("Error updating billing address:", error)
-      toast({
-        title: "Error",
-        description: "Failed to update billing address. Please try again.",
-        variant: "destructive",
-      })
+      toast.error("Failed to update billing address. Please try again.")
     }
   }
 
