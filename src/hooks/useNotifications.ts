@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { toast } from '@/components/ui/use-toast'
+import { toast } from '@/components/ui/toast'
 
 export interface Notification {
   id: string
@@ -29,11 +29,7 @@ export function useNotifications() {
     } catch (error) {
       console.error('Error fetching notifications:', error)
       if (axios.isAxiosError(error)) {
-        toast({
-          title: 'Error',
-          description: error.response?.data?.message || 'Failed to fetch notifications',
-          variant: 'destructive'
-        })
+        toast.error(error.response?.data?.message || 'Failed to fetch notifications')
       }
     } finally {
       setIsLoading(false)
@@ -58,11 +54,7 @@ export function useNotifications() {
     } catch (error) {
       console.error('Error marking notification as read:', error)
       if (axios.isAxiosError(error)) {
-        toast({
-          title: 'Error',
-          description: error.response?.data?.message || 'Failed to mark notification as read',
-          variant: 'destructive'
-        })
+        toast.error(error.response?.data?.message || 'Failed to mark notification as read')
       }
     }
   }
