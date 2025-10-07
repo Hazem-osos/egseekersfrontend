@@ -13,7 +13,7 @@ export function logError(
   error: unknown, 
   context: ErrorLogContext = {}
 ): void {
-  const errorInfo = {
+  const errorInfo: any = {
     timestamp: new Date().toISOString(),
     errorType: error instanceof Error ? error.constructor.name : typeof error,
     message: error instanceof Error ? error.message : String(error),
