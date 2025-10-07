@@ -8,14 +8,13 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Shield, Key, Smartphone, AlertTriangle } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/toast';
 
 export default function SecurityPage() {
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [showQRCode, setShowQRCode] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const [lastPasswordChange, setLastPasswordChange] = useState<Date | null>(null);
-  const { toast } = useToast();
 
   useEffect(() => {
     // TODO: Fetch security settings from API
@@ -33,18 +32,10 @@ export default function SecurityPage() {
         // TODO: Call API to disable 2FA
         setTwoFactorEnabled(false);
         setShowQRCode(false);
-        toast({
-          title: '2FA Disabled',
-          description: 'Two-factor authentication has been disabled.',
-          variant: 'default',
-        });
+        toast.success('Two-factor authentication has been disabled.');
       }
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to update 2FA settings.',
-        variant: 'destructive',
-      });
+      toast.error('Failed to update 2FA settings.');
     }
   };
 
@@ -53,17 +44,9 @@ export default function SecurityPage() {
       // TODO: Call API to verify 2FA code
       setTwoFactorEnabled(true);
       setShowQRCode(false);
-      toast({
-        title: '2FA Enabled',
-        description: 'Two-factor authentication has been enabled successfully.',
-        variant: 'default',
-      });
+      toast.success('Two-factor authentication has been enabled successfully.');
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Invalid verification code.',
-        variant: 'destructive',
-      });
+      toast.error('Invalid verification code.');
     }
   };
 
