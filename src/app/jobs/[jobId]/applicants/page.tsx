@@ -72,7 +72,7 @@ export default function JobApplicantsPage() {
   const handleUpdateProposalStatus = async (proposalId: string, status: 'ACCEPTED' | 'REJECTED') => {
     try {
       const response = await axios.patch(
-        `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${proposalId}`,
+          `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${proposalId}`,
         { status },
         {
           headers: {

@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Call backend API for authentication
-        const backendUrl = process.env.BACKEND_URL || 'http://localhost:5001';
+        const backendUrl =  'https://impressional-unconsoling-beckie.ngrok-free.dev';
         try {
           const response = await fetch(`${backendUrl}/api/auth/login`, {
             method: 'POST',
