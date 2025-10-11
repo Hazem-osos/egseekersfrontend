@@ -1,8 +1,6 @@
 import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
-import { prisma } from './prisma';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -21,31 +19,39 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Invalid credentials');
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
-        });
+        // Call backend API for authentication
+        const backendUrl = process.env.BACKEND_URL || 'http://localhost:5001';
+        try {
+          const response = await fetch(`${backendUrl}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+            }),
+          });
 
-        if (!user || !user.password) {
+          if (!response.ok) {
+            throw new Error('Invalid credentials');
+          }
+
+          const data = await response.json();
+          
+          if (data.success && data.user) {
+            return {
+              id: data.user.id,
+              email: data.user.email,
+              name: data.user.name,
+              role: data.user.role,
+            } as any;
+          }
+          
+          throw new Error('Invalid credentials');
+        } catch (error) {
           throw new Error('Invalid credentials');
         }
-
-        const isCorrectPassword = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-
-        if (!isCorrectPassword) {
-          throw new Error('Invalid credentials');
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        } as any;
       },
     }),
   ],
