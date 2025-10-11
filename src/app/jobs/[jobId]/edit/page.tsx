@@ -61,7 +61,7 @@ export default function EditJobPage() {
           return
         }
 
-        const response = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/jobs/${jobId}`, {
+        const response = await axios.get(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` }   
         })
 
@@ -122,7 +122,7 @@ export default function EditJobPage() {
       }
 
       await axios.put(
-        `https://impressional-unconsoling-beckie.ngrok-free.dev/api/jobs/${jobId}`,
+        `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs/${jobId}`,
         updatedJob,
         { headers: { Authorization: `Bearer ${token}` } }
       )

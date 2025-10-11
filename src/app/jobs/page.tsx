@@ -285,7 +285,7 @@ export default function JobsPage() {
         return
       }
 
-      const response = await axios.get('https://impressional-unconsoling-beckie.ngrok-free.dev/api/jobs', {
+      const response = await axios.get('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs', {
         headers: { Authorization: `Bearer ${token}` },
         params: {
           page,

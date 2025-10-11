@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         // Call backend API for authentication
-        const backendUrl =  'https://impressional-unconsoling-beckie.ngrok-free.dev';
+        const backendUrl = 'https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app';
         try {
           const response = await fetch(`${backendUrl}/api/auth/login`, {
             method: 'POST',

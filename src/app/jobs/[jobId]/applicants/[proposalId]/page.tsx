@@ -71,12 +71,12 @@ export default function ProposalDetailsPage() {
         }
 
         // Get current user
-        const userResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/auth/me`, {
+        const userResponse = await axios.get(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
 
         // Get job details
-        const jobResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/jobs/${jobId}`, {
+        const jobResponse = await axios.get(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         setJob(jobResponse.data)
@@ -85,7 +85,7 @@ export default function ProposalDetailsPage() {
         setIsJobPoster(userResponse.data.role === 'CLIENT' && jobResponse.data.client.id === userResponse.data.id)
 
         // Get proposal details
-        const proposalResponse = await axios.get(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${proposalId}`, {
+        const proposalResponse = await axios.get(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/proposals/${proposalId}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         setProposal(proposalResponse.data)
@@ -111,7 +111,7 @@ export default function ProposalDetailsPage() {
   const handleUpdateProposalStatus = async (status: 'ACCEPTED' | 'REJECTED') => {
     try {
       const response = await axios.patch(
-        `https://impressional-unconsoling-beckie.ngrok-free.dev/api/proposals/${proposalId}`,
+        `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/proposals/${proposalId}`,
         { status },
         {
           headers: {

@@ -41,7 +41,7 @@ export default function SignupPage() {
   useEffect(() => {
     const checkServer = async () => {
       try {
-        const response = await fetch('https://impressional-unconsoling-beckie.ngrok-free.dev/api/health', {
+        const response = await fetch('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/health', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://impressional-unconsoling-beckie.ngrok-free.dev/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api',
   headers: {
     'Content-Type': 'application/json',
   },

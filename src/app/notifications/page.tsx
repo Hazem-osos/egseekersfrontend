@@ -34,7 +34,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      const response = await axios.get('https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications', {
+      const response = await axios.get('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/notifications', {
         headers: { Authorization: `Bearer ${token}` } 
       });
 
@@ -55,7 +55,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      await axios.put(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/${id}/read`, {}, {   
+      await axios.put(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/notifications/${id}/read`, {}, {   
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -78,7 +78,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      await axios.put('https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/read/all', {}, {
+      await axios.put('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/notifications/read/all', {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -98,7 +98,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      await axios.delete(`https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/${id}`, {
+      await axios.delete(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/notifications/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -121,7 +121,7 @@ const NotificationsPage = () => {
         return;
       }
 
-      await axios.delete('https://impressional-unconsoling-beckie.ngrok-free.dev/api/notifications/read/all', {
+      await axios.delete('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/notifications/read/all', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
