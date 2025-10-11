@@ -142,7 +142,7 @@ export default function SignupPage() {
       if (user.role === 'FREELANCER') {
         router.push('/freelancer/dashboard');
       } else if (user.role === 'CLIENT') {
-        router.push('/client/dashboard');
+        router.push('/job-poster/dashboard');
       }
     } catch (err) {
       console.error("Registration error:", err);
