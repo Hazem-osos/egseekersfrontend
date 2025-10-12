@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { toast } from '@/components/ui/toast'
+import { toast } from 'sonner'
 
 export interface Notification {
   id: string
@@ -18,18 +18,31 @@ export function useNotifications() {
   const fetchNotifications = async () => {
     try {
       const token = localStorage.getItem('token')
-      if (!token) return
+      if (!token) {
+        console.log('No token found for notifications')
+        setIsLoading(false)
+        return
+      }
 
-      const response = await axios.get('http://localhost:5001/api/notifications', {
+      console.log('Fetching notifications...')
+      const response = await axios.get('https://egbackend-1.onrender.com/api/notifications', {
         headers: { Authorization: `Bearer ${token}` }
       })
 
+      console.log('Notifications response:', response.data)
       setNotifications(response.data)
       setUnreadCount(response.data.filter((n: Notification) => !n.read).length)
     } catch (error) {
       console.error('Error fetching notifications:', error)
       if (axios.isAxiosError(error)) {
+        console.error('Error details:', {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data
+        })
         toast.error(error.response?.data?.message || 'Failed to fetch notifications')
+      } else {
+        toast.error('Failed to fetch notifications')
       }
     } finally {
       setIsLoading(false)
@@ -42,7 +55,7 @@ export function useNotifications() {
       if (!token) return
 
       await axios.put(
-        `http://localhost:5001/api/notifications/${notificationId}/read`,
+        `https://egbackend-1.onrender.com/api/notifications/${notificationId}/read`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )

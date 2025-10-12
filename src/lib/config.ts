@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://localhost:5001/api';
+export const API_BASE_URL = 'https://egbackend-1.onrender.com/api';
 export const WS_BASE_URL = 'ws://localhost:5001/ws';
 
 // Other configuration constants can be added here as needed
