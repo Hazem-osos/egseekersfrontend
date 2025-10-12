@@ -79,14 +79,14 @@ export default function JobDetailsPage() {
         }
 
         // First fetch user role and ID
-        const userResponse = await axios.get('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/auth/me', {
+        const userResponse = await axios.get('https://egbackend-1.onrender.com/api/auth/me', {
           headers: { Authorization: `Bearer ${token}` }
         })
         setUserRole(userResponse.data.role)
         setUserId(userResponse.data.id)
 
         // Then fetch job details
-        const jobResponse = await axios.get(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs/${jobId}`, {
+        const jobResponse = await axios.get(`https://egbackend-1.onrender.com/api/jobs/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         setJob(jobResponse.data)
@@ -95,7 +95,7 @@ export default function JobDetailsPage() {
         if (userResponse.data.role === 'FREELANCER') {
           try {
             const proposalResponse = await axios.get(
-              `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs/${jobId}/applications/status`,
+              `https://egbackend-1.onrender.com/api/jobs/${jobId}/applications/status`,
               { headers: { Authorization: `Bearer ${token}` } }
             )
             if (proposalResponse.data.hasApplied && proposalResponse.data.proposal) {
@@ -110,7 +110,7 @@ export default function JobDetailsPage() {
         // Finally check for active contract if user is the job owner
         if (jobResponse.data.client.id === userResponse.data.id) {
           const contractResponse = await axios.get(
-            `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs/${jobId}/contract`,
+            `https://egbackend-1.onrender.com/api/jobs/${jobId}/contract`,
             { headers: { Authorization: `Bearer ${token}` } }
           )
           setHasActiveContract(contractResponse.data.hasActiveContract)
@@ -155,14 +155,14 @@ export default function JobDetailsPage() {
       if (!token) return
 
       await axios.patch(
-        `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs/${jobId}/close`,
+        `https://egbackend-1.onrender.com/api/jobs/${jobId}/close`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )
 
       toast.success('Job closed successfully')
       // Refresh job data
-        const response = await axios.get(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs/${jobId}`, {
+        const response = await axios.get(`https://egbackend-1.onrender.com/api/jobs/${jobId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setJob(response.data)

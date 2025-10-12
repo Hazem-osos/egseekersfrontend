@@ -19,8 +19,8 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Invalid credentials');
         }
 
-        // Call backend API for authentication
-        const backendUrl = 'https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app';
+              // Call backend API for authentication
+              const backendUrl = 'https://egbackend-1.onrender.com';
         try {
           const response = await fetch(`${backendUrl}/api/auth/login`, {
             method: 'POST',

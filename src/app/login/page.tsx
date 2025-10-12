@@ -45,7 +45,7 @@ export default function LoginPage() {
 
   const checkServer = async (): Promise<boolean> => {
     try {
-      const response = await fetch('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/health', {
+      const response = await fetch('https://egbackend-1.onrender.com/api/health', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

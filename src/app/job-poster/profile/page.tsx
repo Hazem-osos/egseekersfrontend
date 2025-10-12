@@ -13,7 +13,7 @@ import Link from "next/link"
 
 // Create axios instance
 const api = axios.create({
-  baseURL: 'https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api',
+  baseURL: 'https://egbackend-1.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },

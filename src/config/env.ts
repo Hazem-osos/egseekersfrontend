@@ -1,5 +1,5 @@
 export const config = {
-  apiUrl: 'https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api',
+  apiUrl: 'https://egbackend-1.onrender.com/api',
   wsUrl: 'ws://localhost:5001',
   environment: process.env.NODE_ENV || 'development',
   isDevelopment: process.env.NODE_ENV === 'development',

@@ -38,7 +38,7 @@ export default function Page() {
         return;
       }
 
-      const response = await axios.get('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/portfolio', {
+      const response = await axios.get('https://egbackend-1.onrender.com/api/portfolio', {
         headers: {
           Authorization: `Bearer ${token}`
         }

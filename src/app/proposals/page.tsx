@@ -54,7 +54,7 @@ const ProposalsPage = () => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await axios.get('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/notifications/unread/count', {
+      const response = await axios.get('https://egbackend-1.onrender.com/api/notifications/unread/count', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -73,7 +73,7 @@ const ProposalsPage = () => {
       }
 
       // First, get the user's profile to get their ID and role
-      const userResponse = await axios.get(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/users/profile`, {
+      const userResponse = await axios.get(`https://egbackend-1.onrender.com/api/users/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -87,7 +87,7 @@ const ProposalsPage = () => {
       }
 
       // Use the correct endpoint with the user ID
-      const response = await axios.get(`https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/proposals/freelancer/${userId}`, {
+      const response = await axios.get(`https://egbackend-1.onrender.com/api/proposals/freelancer/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

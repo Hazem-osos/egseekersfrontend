@@ -114,7 +114,7 @@ export default function JobPosterDashboard() {
         }
 
         const userResponse = await axios.get<User>(
-          `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/auth/me`,
+          `https://egbackend-1.onrender.com/api/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`
@@ -161,7 +161,7 @@ export default function JobPosterDashboard() {
         // Fetch data one by one to better handle errors
         try {
           const statsResponse = await axios.get<DashboardStats>(
-            `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/dashboard/stats`, 
+            `https://egbackend-1.onrender.com/api/dashboard/stats`, 
             { headers }
           )
           setStats(statsResponse.data)
@@ -172,7 +172,7 @@ export default function JobPosterDashboard() {
 
         try {
           const jobsResponse = await axios.get<Job[]>(
-            `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/dashboard/jobs/recent`, 
+            `https://egbackend-1.onrender.com/api/dashboard/jobs/recent`, 
             { headers }
           )
           setRecentJobs(jobsResponse.data)
@@ -183,7 +183,7 @@ export default function JobPosterDashboard() {
 
         try {
           const applicationsResponse = await axios.get<Application[]>(
-            `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/dashboard/applications/recent`, 
+            `https://egbackend-1.onrender.com/api/dashboard/applications/recent`, 
             { headers }
           )
           setRecentApplications(applicationsResponse.data)
@@ -194,7 +194,7 @@ export default function JobPosterDashboard() {
 
         try {
           const paymentsResponse = await axios.get<Payment[]>(
-                `https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/dashboard/payments/recent`, 
+                `https://egbackend-1.onrender.com/api/dashboard/payments/recent`, 
             { headers }
           )
           setRecentPayments(paymentsResponse.data)

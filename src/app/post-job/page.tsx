@@ -62,7 +62,7 @@ export default function PostJobPage() {
 
       // Send the request to the backend API
       const response = await axios.post(
-        'https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/jobs',
+        'https://egbackend-1.onrender.com/api/jobs',
         jobData,  
         {
           headers: {
