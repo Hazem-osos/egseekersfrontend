@@ -42,7 +42,7 @@ export function RouteGuard({
         }
 
         const response = await axios.get<User>(
-          `http://localhost:5001/api/auth/me`,
+          `https://egbackend-1.onrender.com/api/auth/me`,
           {
             headers: {
               Authorization: `Bearer ${token}`

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useAuth } from '@/contexts/AuthContext'
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Bell, MessageSquare, LayoutDashboard, CreditCard, DollarSign, Users, Briefcase, FileText, Wallet, Award, Plus, Info, HelpCircle, Search, Menu, X } from "lucide-react"
@@ -35,8 +36,7 @@ interface ExtendedConversation {
 
 export function Navbar() {
   const router = useRouter()
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const { user, loading, logout } = useAuth()
   const [credits, setCredits] = useState(0)
   const [connects, setConnects] = useState(0)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -46,76 +46,38 @@ export function Navbar() {
   const { notifications, unreadCount: notificationCount, markAsRead, fetchNotifications } = useNotifications()
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false)
 
+  // Fetch credits and connects when user changes
   useEffect(() => {
-    const checkAuth = async () => {
+    const fetchUserData = async () => {
+      if (!user) {
+        setCredits(0)
+        setConnects(0)
+        return
+      }
+
       try {
-        // Check for both regular and admin tokens
-        const token = localStorage.getItem('token')
-        const adminToken = localStorage.getItem('adminToken')
-        const adminUserData = localStorage.getItem('adminUser')
-
-        if (!token && !adminToken) {
-          setLoading(false)
-          return
+        // Get credits
+        const creditsResponse = await api.get('/credits')
+        setCredits(creditsResponse.data.totalActiveCredits || 0)
+      } catch (creditsError) {
+        console.error('Failed to fetch credits:', creditsError)
+        setCredits(0)
+      }
+      
+      // If user is a freelancer, get connects
+      if (user.role === "FREELANCER") {
+        try {
+          const connectsResponse = await api.get('/connects')
+          setConnects(connectsResponse.data.totalActiveConnects || 0)
+        } catch (connectsError) {
+          console.error('Failed to fetch connects:', connectsError)
+          setConnects(0)
         }
-
-        // If admin token exists, use admin data
-        if (adminToken && adminUserData) {
-          try {
-            const adminUser = JSON.parse(adminUserData)
-            if (adminUser && adminUser.role === 'ADMIN') {
-              setUser(adminUser)
-              setLoading(false)
-              return
-            }
-          } catch (error) {
-            console.error('Error parsing admin user data:', error)
-          }
-        }
-
-        // Otherwise proceed with regular user authentication
-        if (token) {
-          // Get user data using the API client
-          const userResponse = await api.get<User>('/users/profile')
-          const userData = userResponse.data
-          
-          if (userData) {
-            setUser(userData)
-            
-            try {
-              // Get credits
-              const creditsResponse = await api.get('/credits')
-              setCredits(creditsResponse.data.totalActiveCredits || 0)
-            } catch (creditsError) {
-              console.error('Failed to fetch credits:', creditsError)
-              setCredits(0)
-            }
-            
-            // If user is a freelancer, get connects
-            if (userData.role === "FREELANCER") {
-              try {
-                const connectsResponse = await api.get('/connects')
-                setConnects(connectsResponse.data.totalActiveConnects || 0)
-              } catch (connectsError) {
-                console.error('Failed to fetch connects:', connectsError)
-                setConnects(0)
-              }
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Auth check failed:', error)
-        localStorage.removeItem('token')
-        localStorage.removeItem('adminToken')
-        localStorage.removeItem('adminUser')
-        setUser(null)
-      } finally {
-        setLoading(false)
       }
     }
 
-    checkAuth()
-  }, [])
+    fetchUserData()
+  }, [user])
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -544,8 +506,7 @@ export function Navbar() {
                         localStorage.removeItem('adminUser')
                         router.push('/admin/login')
                       } else {
-                        localStorage.removeItem('token')
-                        router.push('/login')
+                        logout()
                       }
                     }}
                   >

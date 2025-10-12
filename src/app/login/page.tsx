@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useAuth } from '@/contexts/AuthContext'
 import { apiClient } from '@/lib/api-client'
 import { ApiResponse } from '@/types/api'
 import { Button } from "@/components/ui/button"
@@ -37,6 +38,7 @@ interface HealthCheckData {
 export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { login } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -125,8 +127,8 @@ export default function LoginPage() {
         return;
       }
 
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      // Use the global auth context to login
+      login(token, user);
       
       toast.success('Login successful');
       

@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google';
 import { Providers } from '@/providers';
+import { AuthProvider } from '@/contexts/AuthContext';
 import './globals.css';
 import ClientNavbar from '@/components/ClientNavbar';
 
@@ -19,12 +20,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className} suppressHydrationWarning>
         <Providers>
-          <div className="flex min-h-screen flex-col">
-            <ClientNavbar />
-            <main className="flex-1">
-              {children}
-            </main>
-          </div>
+          <AuthProvider>
+            <div className="flex min-h-screen flex-col">
+              <ClientNavbar />
+              <main className="flex-1">
+                {children}
+              </main>
+            </div>
+          </AuthProvider>
         </Providers>
       </body>
     </html>
