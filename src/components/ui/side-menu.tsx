@@ -19,7 +19,7 @@ import {
   MessageSquare,
   CreditCard,
   DollarSign,
-  User
+  User as UserIcon
 } from "lucide-react"
 import { User } from "@/contexts/AuthContext"
 
@@ -197,7 +197,7 @@ export function SideMenu({
               </Link>
               <Link href="/job-poster/profile">
                 <Button variant="ghost" className="w-full justify-start gap-2 hover:bg-blue-50 hover:text-blue-600">
-                  <User className="h-5 w-5" />
+                  <UserIcon className="h-5 w-5" />
                   Profile
                 </Button>
               </Link>
