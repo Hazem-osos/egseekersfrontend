@@ -21,10 +21,10 @@ import {
   DollarSign,
   User
 } from "lucide-react"
-import { User as ApiUser } from "@/lib/api/messages"
+import { User } from "@/contexts/AuthContext"
 
 interface SideMenuProps {
-  user: ApiUser | null
+  user: User | null
   isOpen: boolean
   onClose: () => void
   credits: number

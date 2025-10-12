@@ -13,6 +13,7 @@ import { formatDistanceToNow } from "date-fns"
 import { useNotifications, Notification } from "@/hooks/useNotifications"
 import { SideMenu } from "@/components/ui/side-menu"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { User } from "@/contexts/AuthContext"
 
 interface ExtendedNotification {
   id: string;

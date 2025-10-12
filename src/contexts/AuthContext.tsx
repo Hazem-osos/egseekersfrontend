@@ -9,7 +9,15 @@ export interface User {
   email: string;
   name: string;
   role: 'FREELANCER' | 'CLIENT' | 'ADMIN';
-  image?: string | null;
+  image: string | null;
+  bio: string | null;
+  skills: string[] | null;
+  hourlyRate: number | null;
+  title: string | null;
+  location: string | null;
+  website: string | null;
+  linkedin: string | null;
+  github: string | null;
 }
 
 interface AuthContextType {
