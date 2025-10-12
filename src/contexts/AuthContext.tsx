@@ -4,11 +4,12 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
-interface User {
+export interface User {
   id: string;
   email: string;
   name: string;
   role: 'FREELANCER' | 'CLIENT' | 'ADMIN';
+  image?: string | null;
 }
 
 interface AuthContextType {

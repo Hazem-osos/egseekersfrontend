@@ -21,6 +21,7 @@ interface User {
   email: string
   role: "FREELANCER" | "CLIENT"
   name: string
+  image?: string | null
 }
 
 interface AuthResponse {
