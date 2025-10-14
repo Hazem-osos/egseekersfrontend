@@ -280,10 +280,19 @@ export default function JobsPage() {
   const fetchJobs = async () => {
     try {
       const token = localStorage.getItem('token')
+      console.log('Token exists:', !!token)
+      
       if (!token) {
         router.push('/login')
         return
       }
+
+      console.log('Fetching jobs with params:', {
+        page,
+        limit: 9,
+        category: selectedCategory !== 'all' ? selectedCategory : undefined,
+        search: searchQuery || undefined
+      })
 
       const response = await axios.get('https://egbackend-1.onrender.com/api/jobs', {
         headers: { Authorization: `Bearer ${token}` },
@@ -295,11 +304,14 @@ export default function JobsPage() {
         }
       })
 
+      console.log('API response:', response.data)
+
       // Filter out cancelled jobs
-      const filteredJobs = response.data.jobs.filter((job: Job) => job.status !== 'CANCELLED')
+      const filteredJobs = response.data.data.jobs.filter((job: Job) => job.status !== 'CANCELLED')
+      console.log('Filtered jobs:', filteredJobs.length)
       
       setJobs(filteredJobs)
-      setTotalPages(response.data.pagination.pages)
+      setTotalPages(response.data.data.pagination.pages)
     } catch (error: any) {
       console.error('Error fetching jobs:', error)
       if (error.response?.status === 401) {

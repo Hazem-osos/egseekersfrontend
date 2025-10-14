@@ -73,7 +73,7 @@ export default function PostJobPage() {
       )
 
       toast.success("Job posted successfully!")
-      router.push(`/jobs/${response.data.id}`)
+      router.push(`/jobs/${response.data.data.id}`)
     } catch (error: any) {
       console.error("Error posting job:", error)
       setError(error.response?.data?.error || "Failed to post job")
