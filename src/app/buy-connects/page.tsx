@@ -7,14 +7,16 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Check, Sparkles, Zap, Crown, Star, Gift, Eye, Rocket, Shield, Coins } from "lucide-react"
 import { toast } from "sonner"
+import axios from "axios"
 
 const connectPackages = [
   {
+    id: 1,
     name: "Starter",
-    connects: 50,
-    price: 9.99,
+    connects: 10,
+    price: 100,
     features: [
-      "50 Connects",
+      "10 Connects",
       "Valid for 6 months",
       "Basic support",
       "Standard proposal templates"
@@ -22,11 +24,12 @@ const connectPackages = [
     popular: false
   },
   {
+    id: 2,
     name: "Professional",
-    connects: 150,
-    price: 24.99,
+    connects: 40,
+    price: 350,
     features: [
-      "150 Connects",
+      "40 Connects",
       "Valid for 12 months",
       "Priority support",
       "Advanced proposal templates",
@@ -35,11 +38,12 @@ const connectPackages = [
     popular: true
   },
   {
+    id: 3,
     name: "Premium",
-    connects: 300,
-    price: 44.99,
+    connects: 80,
+    price: 600,
     features: [
-      "300 Connects",
+      "80 Connects",
       "Valid for 12 months",
       "24/7 Premium support",
       "Custom proposal templates",
@@ -71,14 +75,46 @@ export default function BuyConnectsPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
-  const handlePurchase = async (packageName: string) => {
+  const handlePurchase = async (packageId: number) => {
     setLoading(true)
     try {
-      // TODO: Implement payment processing
-      toast.success("Purchase successful! Connects added to your account.")
-      router.push("/dashboard")
-    } catch (error) {
-      toast.error("Failed to process payment. Please try again.")
+      const token = localStorage.getItem('token')
+      if (!token) {
+        toast.error('Please log in to purchase connects')
+        router.push('/login')
+        return
+      }
+
+      // Find the package details
+      const selectedPackage = connectPackages.find(pkg => pkg.id === packageId)
+      if (!selectedPackage) {
+        toast.error('Invalid package selected')
+        return
+      }
+
+      // Call the backend API to purchase connects
+      const response = await axios.post(
+        'https://egbackend-1.onrender.com/api/connect-purchase/purchase',
+        {
+          packageId: selectedPackage.id
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      if (response.data.success) {
+        toast.success(`Successfully purchased ${selectedPackage.connects} connects!`)
+        router.push('/freelancer/connects')
+      } else {
+        toast.error('Failed to purchase connects. Please try again.')
+      }
+    } catch (error: any) {
+      console.error('Error purchasing connects:', error)
+      toast.error(error.response?.data?.error || 'Failed to process payment. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -154,7 +190,7 @@ export default function BuyConnectsPage() {
                       <div className={`text-4xl font-bold mb-2 ${
                         pkg.name === "Premium" ? 'text-white' : 'text-gray-900'
                       }`}>
-                        ${pkg.price}
+                        {pkg.price} EGP
                       </div>
                       <div className={pkg.name === "Premium" ? 'text-gray-300' : 'text-muted-foreground'}>
                         {pkg.connects} Connects
@@ -182,7 +218,7 @@ export default function BuyConnectsPage() {
                             ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white'
                             : 'bg-gradient-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white'
                       } transition-all duration-300`}
-                      onClick={() => handlePurchase(pkg.name)}
+                      onClick={() => handlePurchase(pkg.id)}
                       disabled={loading}
                     >
                       {loading ? "Processing..." : "Purchase Now"}
