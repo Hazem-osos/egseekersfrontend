@@ -141,6 +141,9 @@ export default function LoginPage() {
       
       toast.success('Login successful');
       
+      // Reload the page to update navbar and all components
+      window.location.reload();
+      
       // Redirect based on role
       if (user.role === 'FREELANCER') {
         router.push('/freelancer/dashboard');

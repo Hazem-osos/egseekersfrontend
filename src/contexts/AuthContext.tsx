@@ -48,6 +48,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUser');
     setUser(null);
+    
+    // Reload the page to update navbar and all components
+    window.location.reload();
+    
     router.push('/login');
   };
 

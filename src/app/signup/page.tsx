@@ -138,6 +138,9 @@ export default function SignupPage() {
       // Show success message
       toast.success('Account created successfully! Redirecting...');
       
+      // Reload the page to update navbar and all components
+      window.location.reload();
+      
       // Redirect based on role
       if (user.role === 'FREELANCER') {
         router.push('/freelancer/dashboard');

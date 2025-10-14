@@ -300,8 +300,8 @@ export default function FreelancerSettingsPage() {
   const handlePortfolioUpdate = async () => {
     try {
       await api.put('/users/portfolio', {
-        title: user?.name || '',
-        description: user?.bio || '',
+        title: localUser?.name || '',
+        description: localUser?.bio || '',
         items: portfolio.map(item => ({
           id: item.id || '',
           title: item.title || '',
@@ -336,11 +336,11 @@ export default function FreelancerSettingsPage() {
   }
 
   const handleAddSkill = () => {
-    if (newSkill.trim() && user?.skills) {
-      if (!user.skills.includes(newSkill.trim())) {
-        setUser({
-          ...user,
-          skills: [...user.skills, newSkill.trim()]
+    if (newSkill.trim() && localUser?.skills) {
+      if (!localUser.skills.includes(newSkill.trim())) {
+        setLocalUser({
+          ...localUser,
+          skills: [...localUser.skills, newSkill.trim()]
         })
       }
       setNewSkill('')
@@ -348,10 +348,10 @@ export default function FreelancerSettingsPage() {
   }
 
   const handleRemoveSkill = (skillToRemove: string) => {
-    if (user?.skills) {
-      setUser({
-        ...user,
-        skills: user.skills.filter(skill => skill !== skillToRemove)
+    if (localUser?.skills) {
+      setLocalUser({
+        ...localUser,
+        skills: localUser.skills.filter(skill => skill !== skillToRemove)
       })
     }
   }
@@ -374,7 +374,7 @@ export default function FreelancerSettingsPage() {
             'Content-Type': 'multipart/form-data',
           },
         })
-        setUser(prev => prev ? { ...prev, image: response.data.image } : null)
+        setLocalUser(prev => prev ? { ...prev, image: response.data.image } : null)
         toast.success('Profile picture updated successfully')
       } catch (error) {
         console.error('Failed to upload avatar:', error)
@@ -457,27 +457,27 @@ export default function FreelancerSettingsPage() {
   };
 
   const handleSaveProfile = async () => {
-    if (!user) return
+    if (!localUser) return
     
     try {
       const response = await api.put('/users/profile', {
-        name: user.name,
-        bio: user.bio,
-        skills: user.skills,
-        hourlyRate: user.hourlyRate,
-        phone: user.phone,
-        location: user.location,
-        website: user.website,
-        linkedin: user.linkedin,
-        github: user.github,
-        availability: user.availability,
-        languages: user.languages,
-        timezone: user.timezone,
-        preferredPaymentMethod: user.preferredPaymentMethod,
-        taxInfo: user.taxInfo
+        name: localUser.name,
+        bio: localUser.bio,
+        skills: localUser.skills,
+        hourlyRate: localUser.hourlyRate,
+        phone: localUser.phone,
+        location: localUser.location,
+        website: localUser.website,
+        linkedin: localUser.linkedin,
+        github: localUser.github,
+        availability: localUser.availability,
+        languages: localUser.languages,
+        timezone: localUser.timezone,
+        preferredPaymentMethod: localUser.preferredPaymentMethod,
+        taxInfo: localUser.taxInfo
       })
       
-      setUser(response.data)
+      setLocalUser(response.data)
       toast.success('Profile updated successfully')
     } catch (error) {
       console.error('Profile update error:', error)
@@ -500,16 +500,16 @@ export default function FreelancerSettingsPage() {
   }
 
   const handleSaveBilling = async () => {
-    if (!user) return
+    if (!localUser) return
 
     try {
       await api.put('/users/billing', {
         paymentMethod: {
-          type: user.preferredPaymentMethod || '',
+          type: localUser.preferredPaymentMethod || '',
           taxInfo: {
-            taxId: user.taxInfo?.taxId || '',
-            country: user.taxInfo?.country || '',
-            state: user.taxInfo?.state || ''
+            taxId: localUser.taxInfo?.taxId || '',
+            country: localUser.taxInfo?.country || '',
+            state: localUser.taxInfo?.state || ''
           }
         }
       })
@@ -539,7 +539,7 @@ export default function FreelancerSettingsPage() {
     return <div>Loading...</div>
   }
 
-  if (!user) {
+  if (!localUser) {
     return null
   }
 
@@ -570,9 +570,9 @@ export default function FreelancerSettingsPage() {
                 <div className="flex items-center gap-6">
                   <div className="relative">
                     <Avatar className="h-24 w-24 ring-4 ring-blue-100">
-                      <AvatarImage src={avatarPreview || user?.image} />
+                      <AvatarImage src={avatarPreview || localUser?.image} />
                       <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-500 text-white text-2xl">
-                        {user?.name?.split(" ").map((n) => n[0]).join("")}
+                        {localUser?.name?.split(" ").map((n) => n[0]).join("")}
                       </AvatarFallback>
                     </Avatar>
                     <div className="absolute -bottom-2 -right-2">
@@ -617,8 +617,8 @@ export default function FreelancerSettingsPage() {
                     <Label htmlFor="name">Full Name</Label>
                     <Input
                       id="name"
-                      value={user?.name || ''}
-                      onChange={(e) => setUser(prev => prev ? { ...prev, name: e.target.value } : null)}
+                      value={localUser?.name || ''}
+                      onChange={(e) => setLocalUser(prev => prev ? { ...prev, name: e.target.value } : null)}
                       className="bg-white/50"
                     />
                   </div>
@@ -627,7 +627,7 @@ export default function FreelancerSettingsPage() {
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
-                      value={user?.email || ''}
+                      value={localUser?.email || ''}
                       disabled
                       className="bg-gray-50"
                     />
@@ -637,8 +637,8 @@ export default function FreelancerSettingsPage() {
                     <Label htmlFor="title">Professional Title</Label>
                     <Input
                       id="title"
-                      value={(user as any)?.title || ''}
-                      onChange={(e) => setUser(prev => (prev ? ({ ...(prev as any), title: e.target.value } as any) : null))}
+                      value={(localUser as any)?.title || ''}
+                      onChange={(e) => setLocalUser(prev => (prev ? ({ ...(prev as any), title: e.target.value } as any) : null))}
                       className="bg-white/50"
                       placeholder="e.g. Senior Web Developer"
                     />
@@ -649,8 +649,8 @@ export default function FreelancerSettingsPage() {
                     <Input
                       id="phone"
                       type="tel"
-                      value={user?.phone || ''}
-                      onChange={(e) => setUser(prev => prev ? { ...prev, phone: e.target.value } : null)}
+                      value={localUser?.phone || ''}
+                      onChange={(e) => setLocalUser(prev => prev ? { ...prev, phone: e.target.value } : null)}
                       className="bg-white/50"
                     />
                   </div>
@@ -659,8 +659,8 @@ export default function FreelancerSettingsPage() {
                     <Label htmlFor="location">Location</Label>
                     <Input
                       id="location"
-                      value={user?.location || ''}
-                      onChange={(e) => setUser(prev => prev ? { ...prev, location: e.target.value } : null)}
+                      value={localUser?.location || ''}
+                      onChange={(e) => setLocalUser(prev => prev ? { ...prev, location: e.target.value } : null)}
                       className="bg-white/50"
                     />
                   </div>
@@ -669,8 +669,8 @@ export default function FreelancerSettingsPage() {
                     <Label htmlFor="website">Portfolio Website</Label>
                     <Input
                       id="website"
-                      value={user?.website || ''}
-                      onChange={(e) => setUser(prev => prev ? { ...prev, website: e.target.value } : null)}
+                      value={localUser?.website || ''}
+                      onChange={(e) => setLocalUser(prev => prev ? { ...prev, website: e.target.value } : null)}
                       className="bg-white/50"
                     />
                   </div>
@@ -679,8 +679,8 @@ export default function FreelancerSettingsPage() {
                     <Label htmlFor="linkedin">LinkedIn Profile</Label>
                     <Input
                       id="linkedin"
-                      value={user?.linkedin || ''}
-                      onChange={(e) => setUser(prev => prev ? { ...prev, linkedin: e.target.value } : null)}
+                      value={localUser?.linkedin || ''}
+                      onChange={(e) => setLocalUser(prev => prev ? { ...prev, linkedin: e.target.value } : null)}
                       className="bg-white/50"
                     />
                   </div>
@@ -689,8 +689,8 @@ export default function FreelancerSettingsPage() {
                     <Label htmlFor="github">GitHub Profile</Label>
                     <Input
                       id="github"
-                      value={user?.github || ''}
-                      onChange={(e) => setUser(prev => prev ? { ...prev, github: e.target.value } : null)}
+                      value={localUser?.github || ''}
+                      onChange={(e) => setLocalUser(prev => prev ? { ...prev, github: e.target.value } : null)}
                       className="bg-white/50"
                     />
                   </div>
@@ -700,8 +700,8 @@ export default function FreelancerSettingsPage() {
                   <Label htmlFor="bio">About</Label>
                   <Textarea
                     id="bio"
-                    value={user?.bio || ''}
-                    onChange={(e) => setUser(prev => prev ? { ...prev, bio: e.target.value } : null)}
+                    value={localUser?.bio || ''}
+                    onChange={(e) => setLocalUser(prev => prev ? { ...prev, bio: e.target.value } : null)}
                     placeholder="Tell clients about your skills, experience, and what you can offer"
                     className="bg-white/50 min-h-[120px]"
                   />
@@ -710,7 +710,7 @@ export default function FreelancerSettingsPage() {
                 <div className="space-y-4">
                   <h3 className="font-medium text-lg">Skills</h3>
                   <div className="flex flex-wrap gap-2">
-                    {user?.skills?.map((skill, index) => (
+                    {localUser?.skills?.map((skill, index) => (
                       <Badge
                         key={index}
                         variant="secondary"
@@ -1019,8 +1019,8 @@ export default function FreelancerSettingsPage() {
                       <Label htmlFor="accountNumber">Account Number</Label>
                       <Input
                         id="accountNumber"
-                        value={user?.taxInfo?.taxId || ''}
-                        onChange={(e) => setUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, taxId: e.target.value } } : null) }
+                        value={localUser?.taxInfo?.taxId || ''}
+                        onChange={(e) => setLocalUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, taxId: e.target.value } } : null) }
                         className="bg-white/50"
                         placeholder="Enter your bank account number"
                       />
@@ -1029,8 +1029,8 @@ export default function FreelancerSettingsPage() {
                       <Label htmlFor="routingNumber">Routing Number</Label>
                       <Input
                         id="routingNumber"
-                        value={user?.taxInfo?.routingNumber || ''}
-                        onChange={(e) => setUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, routingNumber: e.target.value } } : null) }
+                        value={localUser?.taxInfo?.routingNumber || ''}
+                        onChange={(e) => setLocalUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, routingNumber: e.target.value } } : null) }
                         className="bg-white/50"
                         placeholder="Enter your bank routing number"
                       />
@@ -1038,8 +1038,8 @@ export default function FreelancerSettingsPage() {
                     <div className="space-y-2">
                       <Label htmlFor="accountType">Account Type</Label>
                       <Select
-                        value={user?.taxInfo?.accountType || ''}
-                        onValueChange={(value) => setUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, accountType: value } } : null) }
+                        value={localUser?.taxInfo?.accountType || ''}
+                        onValueChange={(value) => setLocalUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, accountType: value } } : null) }
                       >
                         <SelectTrigger className="bg-white/50">
                           <SelectValue placeholder="Select account type" />
@@ -1054,8 +1054,8 @@ export default function FreelancerSettingsPage() {
                       <Label htmlFor="bankName">Bank Name</Label>
                       <Input
                         id="bankName"
-                        value={user?.taxInfo?.bankName || ''}
-                        onChange={(e) => setUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, bankName: e.target.value } } : null) }
+                        value={localUser?.taxInfo?.bankName || ''}
+                        onChange={(e) => setLocalUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, bankName: e.target.value } } : null) }
                         className="bg-white/50"
                         placeholder="Enter your bank name"
                       />
@@ -1071,8 +1071,8 @@ export default function FreelancerSettingsPage() {
                       <p className="text-sm text-muted-foreground">Receive automatic payouts when your balance reaches the minimum threshold</p>
                     </div>
                     <Switch
-                      checked={user?.taxInfo?.automaticPayouts || false}
-                      onCheckedChange={(checked) => setUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, automaticPayouts: checked } } : null) }
+                      checked={localUser?.taxInfo?.automaticPayouts || false}
+                      onCheckedChange={(checked) => setLocalUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, automaticPayouts: checked } } : null) }
                     />
                   </div>
                   <div className="space-y-2">
@@ -1080,8 +1080,8 @@ export default function FreelancerSettingsPage() {
                     <Input
                       id="minimumPayout"
                       type="number"
-                      value={user?.taxInfo?.minimumPayout || ''}
-                      onChange={(e) => setUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, minimumPayout: parseFloat(e.target.value) } } : null) }
+                      value={localUser?.taxInfo?.minimumPayout || ''}
+                      onChange={(e) => setLocalUser(prev => prev ? { ...prev, taxInfo: { ...prev.taxInfo, minimumPayout: parseFloat(e.target.value) } } : null) }
                       className="bg-white/50"
                       placeholder="Enter minimum payout amount"
                     />
