@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/accordion"
 import { Card } from "@/components/ui/card"
 import {
-  User,
+  User as UserIcon,
   MessageSquare,
   HelpCircle,
   Briefcase,
@@ -90,7 +90,7 @@ export function Navigation() {
   const commonSections = [
     {
       title: "Account",
-      icon: <User className="h-4 w-4" />,
+      icon: <UserIcon className="h-4 w-4" />,
       items: [
         { label: "Profile", href: "/profile" },
         { 

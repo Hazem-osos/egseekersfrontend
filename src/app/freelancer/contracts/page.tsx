@@ -10,7 +10,7 @@ import { FileText, CheckCircle, XCircle, Clock, AlertCircle, DollarSign, Calenda
 import { formatCurrency } from "@/lib/utils"
 import { Contract, ContractStatus, ContractSubmission } from "@/types/contract"
 import { ApiResponse } from "@/types/api"
-import { toast } from "react-hot-toast"
+import { toast } from "sonner"
 import { apiClient } from "@/lib/api-client"
 
 export default function FreelancerContractsPage() {

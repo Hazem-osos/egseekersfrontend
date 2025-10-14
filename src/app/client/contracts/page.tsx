@@ -11,7 +11,7 @@ import { formatCurrency } from "@/lib/utils"
 import { ApiResponse } from "@/types/api"
 import { Contract, ContractStatus, ContractSubmission } from "@/types/contract"
 import { Ticket, TicketPriority } from "@/types/ticket"
-import { toast } from "react-hot-toast"
+import { toast } from "sonner"
 
 const API_BASE_URL =  'https://egbackend-1.onrender.com/api'
 
