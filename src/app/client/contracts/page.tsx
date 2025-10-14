@@ -13,7 +13,7 @@ import { Contract, ContractStatus, ContractSubmission } from "@/types/contract"
 import { Ticket, TicketPriority } from "@/types/ticket"
 import { toast } from "react-hot-toast"
 
-const API_BASE_URL =  'http://localhost:5001/api'
+const API_BASE_URL =  'https://egbackend-1.onrender.com/api'
 
 interface FileUrlObject {
   url?: string;

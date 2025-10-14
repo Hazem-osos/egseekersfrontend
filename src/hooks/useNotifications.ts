@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { toast } from 'sonner'
 
+
 export interface Notification {
   id: string
   type: 'CHAT' | 'PROPOSAL' | 'JOB'

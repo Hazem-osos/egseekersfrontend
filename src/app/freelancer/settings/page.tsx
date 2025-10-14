@@ -17,10 +17,11 @@ import { freelancerApi } from "@/lib/api/freelancer"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { IdVerification } from '@/components/verification/IdVerification'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useAuth } from "@/contexts/AuthContext"
 
 // Create axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:5001/api',
+  baseURL: 'https://egbackend-1.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -126,7 +127,8 @@ interface ResumeFile {
 
 export default function FreelancerSettingsPage() {
   const router = useRouter()
-  const [user, setUser] = useState<User | null>(null)
+  const { user: authUser, loading: authLoading } = useAuth()
+  const [localUser, setLocalUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>({
@@ -175,18 +177,24 @@ export default function FreelancerSettingsPage() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const token = localStorage.getItem('token')
-      if (!token) {
+      // Use AuthContext instead of localStorage check
+      if (authLoading) {
+        return // Still loading
+      }
+
+      if (!authUser) {
+        router.push('/login')
+        return
+      }
+
+      if (authUser.role !== 'FREELANCER') {
         router.push('/login')
         return
       }
 
       try {
+        // Fetch additional user data if needed
         const response = await api.get('/users/profile')
-        if (response.data.role !== 'FREELANCER') {
-          router.push('/login')
-          return
-        }
         
         // Ensure all user fields have default values to prevent undefined
         const userData = {
@@ -212,7 +220,7 @@ export default function FreelancerSettingsPage() {
           }
         }
         
-        setUser(userData)
+        setLocalUser(userData)
         
         // Fetch verification status
         const verificationResponse = await api.get('/verification/status')

@@ -36,7 +36,7 @@ export default function ChatsPage() {
         }
 
         console.log('Fetching chats...')
-        const response = await fetch('http://localhost:5001/api/messages/conversations', {
+        const response = await fetch('https://egbackend-1.onrender.com/api/messages/conversations', {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'

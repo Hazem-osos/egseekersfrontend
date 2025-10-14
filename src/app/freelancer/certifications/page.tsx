@@ -50,7 +50,7 @@ export default function CertificationsPage() {
       }
 
       try {
-        const response = await axios.get('http://localhost:5001/api/certifications', {
+        const response = await axios.get('https://egbackend-1.onrender.com/api/certifications', {
           headers: { Authorization: `Bearer ${token}` }
         })
         setCertifications(response.data)
@@ -72,19 +72,19 @@ export default function CertificationsPage() {
 
     try {
       if (editingCert) {
-        await axios.put(`http://localhost:5001/api/certifications/${editingCert.id}`, formData, {
+        await axios.put(`https://egbackend-1.onrender.com/api/certifications/${editingCert.id}`, formData, {
           headers: { Authorization: `Bearer ${token}` }
         })
         toast.success('Certification updated successfully')
       } else {
-        await axios.post('http://localhost:5001/api/certifications', formData, {
+        await axios.post('https://egbackend-1.onrender.com/api/certifications', formData, {
           headers: { Authorization: `Bearer ${token}` }
         })
         toast.success('Certification added successfully')
       }
 
       // Refresh certifications
-      const response = await axios.get('http://localhost:5001/api/certifications', {
+      const response = await axios.get('https://egbackend-1.onrender.com/api/certifications', {
         headers: { Authorization: `Bearer ${token}` }
       })
       setCertifications(response.data)
@@ -112,7 +112,7 @@ export default function CertificationsPage() {
     if (!token) return
 
     try {
-      await axios.delete(`http://localhost:5001/api/certifications/${id}`, {
+        await axios.delete(`https://egbackend-1.onrender.com/api/certifications/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setCertifications(prev => prev.filter(cert => cert.id !== id))

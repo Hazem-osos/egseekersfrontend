@@ -13,7 +13,7 @@ import Link from "next/link"
 
 // Create axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:5001/api',
+  baseURL: 'https://egbackend-1.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -44,7 +44,7 @@ export default function PortfolioPage() {
       }
 
       try {
-        const response = await axios.get('http://localhost:5001/api/portfolio', {
+        const response = await axios.get('https://egbackend-1.onrender.com/api/portfolio', {
           headers: { Authorization: `Bearer ${token}` }
         })
         setPortfolioItems(response.data)
@@ -83,7 +83,7 @@ export default function PortfolioPage() {
       })
 
       if (editingItem) {
-        await axios.put(`http://localhost:5001/api/portfolio/${editingItem.id}`, formDataToSend, {
+        await axios.put(`https://egbackend-1.onrender.com/api/portfolio/${editingItem.id}`, formDataToSend, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -91,7 +91,7 @@ export default function PortfolioPage() {
         })
         toast.success('Portfolio item updated successfully')
       } else {
-        await axios.post('http://localhost:5001/api/portfolio', formDataToSend, {
+        await axios.post('https://egbackend-1.onrender.com/api/portfolio', formDataToSend, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -101,7 +101,7 @@ export default function PortfolioPage() {
       }
 
       // Refresh portfolio items
-      const response = await axios.get('http://localhost:5001/api/portfolio', {
+      const response = await axios.get('https://egbackend-1.onrender.com/api/portfolio', {
         headers: { Authorization: `Bearer ${token}` }
       })
       setPortfolioItems(response.data)
@@ -126,7 +126,7 @@ export default function PortfolioPage() {
     if (!token) return
 
     try {
-      await axios.delete(`http://localhost:5001/api/portfolio/${id}`, {
+        await axios.delete(`https://egbackend-1.onrender.com/api/portfolio/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setPortfolioItems(prev => prev.filter(item => item.id !== id))

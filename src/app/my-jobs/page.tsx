@@ -20,7 +20,7 @@ export default function MyJobsPage() {
           return;
         }
 
-        const response = await axios.get('https://egbackend-1urid4jsb-hazemosama2553-gmailcoms-projects.vercel.app/api/auth/me', {
+        const response = await axios.get('https://egbackend-1.onrender.com/api/auth/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
