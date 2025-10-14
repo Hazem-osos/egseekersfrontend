@@ -141,7 +141,7 @@ export function Navigation() {
         { label: "Post a Job", href: "/jobs/post" },
         { label: "My Jobs", href: "/jobs/my-jobs" },
         { label: "Applications", href: "/jobs/applications" },
-        { label: "Contracts", href: "/job-poster/contracts" },
+        { label: "Contracts", href: "/client/contracts" },
         { label: "Profile", href: "/job-poster/profile" },
       ],
     },

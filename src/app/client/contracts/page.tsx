@@ -52,6 +52,8 @@ async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise
   const url = `${API_BASE_URL}${endpoint}`
   const token = localStorage.getItem('token')
   
+  console.log('fetchApi called with:', { endpoint, url, hasToken: !!token });
+  
   const headers = {
     'Content-Type': 'application/json',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -59,12 +61,15 @@ async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise
   }
 
   try {
+    console.log('Making request to:', url, 'with headers:', headers);
     const response = await fetch(url, {
       ...options,
       headers,
     })
 
+    console.log('Response status:', response.status, response.statusText);
     const data = await response.json()
+    console.log('Response data:', data);
 
     // Check if the response was successful
     if (!response.ok) {
@@ -105,10 +110,15 @@ export default function ClientContractsPage() {
 
   const fetchContracts = async () => {
     try {
+      console.log('Fetching contracts...');
       const response = await fetchApi<ExtendedContract[]>('/contracts')
+      console.log('Contracts response:', response);
+      
       if (response.success && response.data) {
+        console.log('Contracts data received:', response.data);
         setContracts(response.data)
       } else {
+        console.log('Contracts API error:', response.error);
         setError(response.error || "Failed to load contracts")
       }
       setLoading(false)
