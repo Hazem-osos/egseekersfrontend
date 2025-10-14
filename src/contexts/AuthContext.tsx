@@ -99,6 +99,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           try {
             const userData = JSON.parse(storedUser);
             setUser(userData);
+            
+            // If user is on login/signup page and is authenticated, redirect to dashboard
+            if (typeof window !== 'undefined') {
+              const currentPath = window.location.pathname;
+              if (currentPath === '/login' || currentPath === '/signup') {
+                if (userData.role === 'FREELANCER') {
+                  router.push('/freelancer/dashboard');
+                } else if (userData.role === 'CLIENT') {
+                  router.push('/job-poster/dashboard');
+                }
+              }
+            }
           } catch (error) {
             console.error('Error parsing stored user data:', error);
           }
