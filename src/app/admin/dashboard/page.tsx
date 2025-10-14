@@ -17,7 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Loader2 } from 'lucide-react'
 
 // Configure axios defaults
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = 'https://egbackend-1.onrender.com/api';
 axios.defaults.baseURL = API_BASE_URL;
 
 interface User {

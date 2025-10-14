@@ -42,7 +42,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         return;
       }
 
-      const response = await axios.get(`http://localhost:5001/api/portfolio/${resolvedParams!.id}`, {
+      const response = await axios.get(`https://egbackend-1.onrender.com/api/portfolio/${resolvedParams!.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

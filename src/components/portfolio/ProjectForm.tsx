@@ -47,10 +47,10 @@ export function ProjectForm({ initialData, mode }: ProjectFormProps) {
       };
 
       if (mode === 'add') {
-        await axios.post('http://localhost:5001/api/portfolio', formData, { headers });
+        await axios.post('https://egbackend-1.onrender.com/api/portfolio', formData, { headers });
         toast.success('Project added successfully');
       } else {
-        await axios.put(`http://localhost:5001/api/portfolio/${initialData?.id}`, formData, { headers });
+        await axios.put(`https://egbackend-1.onrender.com/api/portfolio/${initialData?.id}`, formData, { headers });
         toast.success('Project updated successfully');
       }
 

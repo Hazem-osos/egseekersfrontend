@@ -52,7 +52,7 @@ export function Applications() {
         return;
       }
 
-      const response = await axios.get('http://localhost:5001/api/dashboard/applications/recent', {
+      const response = await axios.get('https://egbackend-1.onrender.com/api/dashboard/applications/recent', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -73,8 +73,8 @@ export function Applications() {
       
       // Use the new accept/reject endpoints
       const endpoint = newStatus === 'ACCEPTED' 
-        ? `http://localhost:5001/api/proposals/${applicationId}/accept`
-        : `http://localhost:5001/api/proposals/${applicationId}/reject`;
+        ? `https://egbackend-1.onrender.com/api/proposals/${applicationId}/accept`
+        : `https://egbackend-1.onrender.com/api/proposals/${applicationId}/reject`;
       
       await axios.put(
         endpoint,

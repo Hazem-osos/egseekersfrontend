@@ -49,13 +49,27 @@ export default function ProposePage() {
     const fetchJob = async () => {
       try {
         const token = localStorage.getItem('token')
+        console.log('Token exists:', !!token)
+        console.log('Job ID:', params.jobId)
+        
         if (!token) {
+          console.log('No token found, redirecting to login')
           router.push('/login')
           return
         }
         
+        console.log('Making API call to fetch job:', `/jobs/${params.jobId}`)
         const response = await apiClient.get(`/jobs/${params.jobId}`)
-       
+        console.log('API response:', response)
+        
+        if (response.success && response.data && (response.data as any).id) {
+          console.log('Job data received:', response.data)
+          setJob(response.data as Job)
+        } else {
+          console.log('No job data in response')
+          toast.error('Failed to load job details')
+          router.push('/jobs')
+        }
       } catch (error) {
         console.error('Error fetching job:', error)
         toast.error('Failed to load job details')

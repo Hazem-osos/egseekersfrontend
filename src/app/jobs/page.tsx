@@ -102,7 +102,7 @@ function JobCard({ job }: { job: any }) {
 
         // Try to check application status, but handle 404 gracefully
         try {
-          const response = await axios.get(`http://localhost:5001/api/jobs/${job.id}/applications/status`, {
+          const response = await axios.get(`https://egbackend-1.onrender.com/api/jobs/${job.id}/applications/status`, {
             headers: { Authorization: `Bearer ${token}` }
           })
           

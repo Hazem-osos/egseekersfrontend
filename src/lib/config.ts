@@ -1,5 +1,5 @@
 export const API_BASE_URL = 'https://egbackend-1.onrender.com/api';
-export const WS_BASE_URL = 'ws://localhost:5001/ws';
+export const WS_BASE_URL = 'wss://egbackend-1.onrender.com/ws';
 
 // Other configuration constants can be added here as needed
 export const DEFAULT_TIMEOUT = 30000; // 30 seconds

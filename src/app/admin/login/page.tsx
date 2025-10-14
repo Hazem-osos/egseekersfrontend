@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
     setError('');
 
     try {
-      const response = await axios.post<LoginResponse>('http://localhost:5001/api/auth/admin/login', {
+      const response = await axios.post<LoginResponse>('https://egbackend-1.onrender.com/api/auth/admin/login', {
         email,
         password
       });
