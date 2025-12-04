@@ -51,14 +51,14 @@ const MyJobs = () => {
       }
 
       // First get the user's ID
-      const userResponse = await axios.get('https://egbackend-1.onrender.com/api/auth/me', {
+      const userResponse = await axios.get('https://egbackend-6zw2.onrender.com/api/auth/me', {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       const userId = userResponse.data.id;
 
       // Then fetch the jobs using the user's ID
-      const response = await axios.get(`https://egbackend-1.onrender.com/api/jobs/freelancer/${userId}`, {
+      const response = await axios.get(`https://egbackend-6zw2.onrender.com/api/jobs/freelancer/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

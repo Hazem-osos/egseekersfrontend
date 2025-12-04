@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
         }
 
               // Call backend API for authentication
-              const backendUrl = 'https://egbackend-1.onrender.com';
+              const backendUrl = 'https://egbackend-6zw2.onrender.com';
         try {
           const response = await fetch(`${backendUrl}/api/auth/login`, {
             method: 'POST',

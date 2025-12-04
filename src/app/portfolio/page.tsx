@@ -38,7 +38,7 @@ export default function Page() {
         return;
       }
 
-      const response = await axios.get('https://egbackend-1.onrender.com/api/portfolio', {
+      const response = await axios.get('https://egbackend-6zw2.onrender.com/api/portfolio', {
         headers: {
           Authorization: `Bearer ${token}`
         }

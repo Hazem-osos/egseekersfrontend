@@ -14,7 +14,7 @@ export async function GET() {
     }
 
     // Call backend API to get analytics data
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://egbackend-1.onrender.com';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://egbackend-6zw2.onrender.com';
     const response = await fetch(`${backendUrl}/api/admin/analytics`, {
       headers: {
         'Authorization': `Bearer ${session.user.id}`,

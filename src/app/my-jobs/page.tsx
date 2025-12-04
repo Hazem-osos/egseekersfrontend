@@ -20,7 +20,7 @@ export default function MyJobsPage() {
           return;
         }
 
-        const response = await axios.get('https://egbackend-1.onrender.com/api/auth/me', {
+        const response = await axios.get('https://egbackend-6zw2.onrender.com/api/auth/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
 

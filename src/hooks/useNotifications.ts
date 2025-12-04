@@ -26,7 +26,7 @@ export function useNotifications() {
       }
 
       console.log('Fetching notifications...')
-      const response = await axios.get('https://egbackend-1.onrender.com/api/notifications', {
+      const response = await axios.get('https://egbackend-6zw2.onrender.com/api/notifications', {
         headers: { Authorization: `Bearer ${token}` }
       })
 
@@ -56,7 +56,7 @@ export function useNotifications() {
       if (!token) return
 
       await axios.put(
-        `https://egbackend-1.onrender.com/api/notifications/${notificationId}/read`,
+        `https://egbackend-6zw2.onrender.com/api/notifications/${notificationId}/read`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )

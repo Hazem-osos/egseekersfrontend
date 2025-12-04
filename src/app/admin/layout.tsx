@@ -34,7 +34,7 @@ interface User {
 }
 
 // Configure axios defaults
-const API_BASE_URL = 'https://egbackend-1.onrender.com/api';
+const API_BASE_URL = 'https://egbackend-6zw2.onrender.com/api';
 axios.defaults.baseURL = API_BASE_URL;
 
 // Add response interceptor to handle token expiration

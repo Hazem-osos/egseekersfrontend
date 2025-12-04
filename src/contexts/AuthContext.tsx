@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       const response = await axios.get<User>(
-        'https://egbackend-1.onrender.com/api/auth/me',
+        'https://egbackend-6zw2.onrender.com/api/auth/me',
         {
           headers: {
             Authorization: `Bearer ${token}`

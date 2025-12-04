@@ -1,6 +1,6 @@
 export const config = {
-  apiUrl: 'https://egbackend-1.onrender.com/api',
-  wsUrl: 'wss://egbackend-1.onrender.com',
+  apiUrl: process.env.NEXT_PUBLIC_API_URL || 'https://egbackend-6zw2.onrender.com/api',
+  wsUrl: process.env.NEXT_PUBLIC_WS_URL || 'wss://egbackend-6zw2.onrender.com',
   environment: process.env.NODE_ENV || 'development',
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV === 'production',

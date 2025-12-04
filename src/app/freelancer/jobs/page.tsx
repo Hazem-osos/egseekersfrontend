@@ -16,7 +16,7 @@ import { formatCurrency } from "@/lib/utils"
 import { ApiResponse } from "@/types/api"
 import { Contract, ContractStatus } from "@/types/contract"
 
-const API_BASE_URL = 'https://egbackend-1.onrender.com/api'
+const API_BASE_URL = 'https://egbackend-6zw2.onrender.com/api'
 
 interface Job {
   id: string
@@ -92,7 +92,7 @@ export default function MyJobsPage() {
           return
         }
 
-          const response = await fetch('https://egbackend-1.onrender.com/api/dashboard/jobs/recent', {
+          const response = await fetch('https://egbackend-6zw2.onrender.com/api/dashboard/jobs/recent', {
           headers: {
             Authorization: `Bearer ${token}`
           }

@@ -94,7 +94,7 @@ export default function BuyConnectsPage() {
 
       // Call the backend API to purchase connects
       const response = await axios.post(
-        'https://egbackend-1.onrender.com/api/connect-purchase/purchase',
+        'https://egbackend-6zw2.onrender.com/api/connect-purchase/purchase',
         {
           packageId: selectedPackage.id
         },

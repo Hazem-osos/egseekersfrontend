@@ -56,7 +56,7 @@ export default function LoginPage() {
 
   const checkServer = async (): Promise<boolean> => {
     try {
-      const response = await fetch('https://egbackend-1.onrender.com/api/health', {
+      const response = await fetch('https://egbackend-6zw2.onrender.com/api/health', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

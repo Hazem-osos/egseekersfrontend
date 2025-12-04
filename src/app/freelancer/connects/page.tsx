@@ -47,8 +47,8 @@ export default function FreelancerConnectsPage() {
 
       // Fetch user's connects and available packages
       const [connectsRes, packagesRes] = await Promise.all([
-        axios.get("https://egbackend-1.onrender.com/api/connects"),
-        axios.get("https://egbackend-1.onrender.com/api/connects/packages"),
+        axios.get("https://egbackend-6zw2.onrender.com/api/connects"),
+        axios.get("https://egbackend-6zw2.onrender.com/api/connects/packages"),
       ]);
 
       setTotalActiveConnects(connectsRes.data.totalActiveConnects);
@@ -71,7 +71,7 @@ export default function FreelancerConnectsPage() {
       // For now, we'll simulate a payment method
       const paymentMethod = "credit_card";
 
-      await axios.post("https://egbackend-1.onrender.com/api/connects/purchase", {
+      await axios.post("https://egbackend-6zw2.onrender.com/api/connects/purchase", {
         packageId,
         paymentMethod,
       });

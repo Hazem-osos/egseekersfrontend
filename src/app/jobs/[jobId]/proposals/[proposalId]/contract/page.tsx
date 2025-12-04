@@ -57,14 +57,14 @@ export default function ContractPage() {
         }
 
         // Get current user
-        const userResponse = await axios.get(`https://egbackend-1.onrender.com/api/auth/me`, {
+        const userResponse = await axios.get(`https://egbackend-6zw2.onrender.com/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         setUser(userResponse.data)
 
         // Get contract details
         const contractResponse = await axios.get(
-          `https://egbackend-1.onrender.com/api/contracts/proposal/${params.proposalId}`,
+          `https://egbackend-6zw2.onrender.com/api/contracts/proposal/${params.proposalId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         )
 
@@ -104,7 +104,7 @@ export default function ContractPage() {
       console.log('Accepting contract:', contract?.id);
       
       const response = await axios.post(
-        `https://egbackend-1.onrender.com/api/contracts/${contract?.id}/accept`,
+        `https://egbackend-6zw2.onrender.com/api/contracts/${contract?.id}/accept`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -114,7 +114,7 @@ export default function ContractPage() {
       if (response.data.success) {
         // Refresh contract data
         const contractResponse = await axios.get(
-          `https://egbackend-1.onrender.com/api/contracts/proposal/${params.proposalId}`,
+          `https://egbackend-6zw2.onrender.com/api/contracts/proposal/${params.proposalId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         )
         setContract(contractResponse.data.data)

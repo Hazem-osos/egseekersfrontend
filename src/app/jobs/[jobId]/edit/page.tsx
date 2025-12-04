@@ -61,7 +61,7 @@ export default function EditJobPage() {
           return
         }
 
-        const response = await axios.get(`https://egbackend-1.onrender.com/api/jobs/${jobId}`, {
+        const response = await axios.get(`https://egbackend-6zw2.onrender.com/api/jobs/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` }   
         })
 
@@ -122,7 +122,7 @@ export default function EditJobPage() {
       }
 
       await axios.put(
-        `https://egbackend-1.onrender.com/api/jobs/${jobId}`,
+        `https://egbackend-6zw2.onrender.com/api/jobs/${jobId}`,
         updatedJob,
         { headers: { Authorization: `Bearer ${token}` } }
       )

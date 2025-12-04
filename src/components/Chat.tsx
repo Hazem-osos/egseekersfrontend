@@ -30,7 +30,7 @@ export default function Chat({ recipientId, recipientName }: ChatProps) {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await axios.get<User>('https://egbackend-1.onrender.com/api/auth/me', {
+        const response = await axios.get<User>('https://egbackend-6zw2.onrender.com/api/auth/me', {
           headers: {
             Authorization: `Bearer ${token}`
           }

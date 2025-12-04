@@ -41,7 +41,7 @@ export default function SignupPage() {
   useEffect(() => {
     const checkServer = async () => {
       try {
-        const response = await fetch('https://egbackend-1.onrender.com/api/health', {
+        const response = await fetch('https://egbackend-6zw2.onrender.com/api/health', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

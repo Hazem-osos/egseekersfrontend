@@ -102,7 +102,7 @@ function JobCard({ job }: { job: any }) {
 
         // Try to check application status, but handle 404 gracefully
         try {
-          const response = await axios.get(`https://egbackend-1.onrender.com/api/jobs/${job.id}/applications/status`, {
+          const response = await axios.get(`https://egbackend-6zw2.onrender.com/api/jobs/${job.id}/applications/status`, {
             headers: { Authorization: `Bearer ${token}` }
           })
           
@@ -294,7 +294,7 @@ export default function JobsPage() {
         search: searchQuery || undefined
       })
 
-      const response = await axios.get('https://egbackend-1.onrender.com/api/jobs', {
+      const response = await axios.get('https://egbackend-6zw2.onrender.com/api/jobs', {
         headers: { Authorization: `Bearer ${token}` },
         params: {
           page,

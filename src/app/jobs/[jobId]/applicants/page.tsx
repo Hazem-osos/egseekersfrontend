@@ -48,7 +48,7 @@ export default function JobApplicantsPage() {
           return
         }
 
-        const jobResponse = await axios.get(`https://egbackend-1.onrender.com/api/jobs/${jobId}`, {
+        const jobResponse = await axios.get(`https://egbackend-6zw2.onrender.com/api/jobs/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
 
@@ -72,7 +72,7 @@ export default function JobApplicantsPage() {
   const handleUpdateProposalStatus = async (proposalId: string, status: 'ACCEPTED' | 'REJECTED') => {
     try {
       const response = await axios.patch(
-          `https://egbackend-1.onrender.com/api/proposals/${proposalId}`,
+          `https://egbackend-6zw2.onrender.com/api/proposals/${proposalId}`,
         { status },
         {
           headers: {

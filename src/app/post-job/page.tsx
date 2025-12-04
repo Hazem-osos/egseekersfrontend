@@ -62,7 +62,7 @@ export default function PostJobPage() {
 
       // Send the request to the backend API
       const response = await axios.post(
-        'https://egbackend-1.onrender.com/api/jobs',
+        'https://egbackend-6zw2.onrender.com/api/jobs',
         jobData,  
         {
           headers: {
